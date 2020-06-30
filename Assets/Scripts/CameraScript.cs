@@ -6,6 +6,7 @@ public class CameraScript : MonoBehaviour
 {
     private GameObject player;
     private Vector3 nullPoint;
+    private Vector3 newPosition;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,6 +17,7 @@ public class CameraScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = Vector3.Lerp(transform.position, player.transform.position - nullPoint, 0.05f);
+        newPosition = player.transform.position - nullPoint;
+        transform.position = Vector3.Lerp(transform.position, new Vector3(newPosition.x, player.GetComponent<PlayerScript>().getLandingY()-nullPoint.y, newPosition.z), 0.05f);
     }
 }

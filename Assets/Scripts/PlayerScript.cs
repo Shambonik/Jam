@@ -6,13 +6,25 @@ public class PlayerScript : MonoBehaviour
 {
 
     private Vector2 coordinates = new Vector2(0, 0);
+    private float jumpSpeed = 0.1f;
+    private float g = 0.006f;
+    private float ySpeed = 0;
+    private float landingY;
+    private bool jumping = false;
     private Vector3 newPosition;
     private int rot;
-    public int maxCoordinate = 14;
-    // Start is called before the first frame update
+    private int maxCoordinate = 19;
+
+
     void Start()
     {
         newPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+        landingY = transform.position.y;
+    } 
+
+    public float getLandingY()
+    {
+        return landingY;
     }
 
     // Update is called once per frame
@@ -20,34 +32,73 @@ public class PlayerScript : MonoBehaviour
     {
         transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(transform.eulerAngles.x, rot, transform.eulerAngles.z), 30);
         transform.position = Vector3.Lerp(transform.position, newPosition, 0.1f);
-        if (Mathf.Sqrt(Mathf.Pow(transform.position.x - newPosition.x, 2) + Mathf.Pow(transform.position.z - newPosition.z, 2)) < 0.1f) {
-            if (Input.GetKey("d"))
+        transform.position = new Vector3(transform.position.x, transform.position.y + ySpeed, transform.position.z);
+        if ((ySpeed<0)&&(transform.position.y - landingY < 0.05f))
+        {
+            transform.position = new Vector3(newPosition.x, landingY, newPosition.z);
+            ySpeed = 0;
+            jumping = false;
+        }
+        else if (jumping) ySpeed -= g;
+        Debug.Log(ySpeed);
+        
+        if (ySpeed==0) {
+            if (Input.GetKey("w"))
             {
-                coordinates.x = Mathf.Min(coordinates.x + 1, maxCoordinate);
+                if (coordinates.x + 1 > maxCoordinate) {
+                    coordinates.x = maxCoordinate;
+                }
+                else {
+                    coordinates.x++;
+                    ySpeed = jumpSpeed;
+                    jumping = true;
+                }
                 rot = 0;
-               // transform.rotation = Quaternion.Euler(transform.eulerAngles.x, 0, transform.eulerAngles.y);
-            }
-            else if (Input.GetKey("a"))
-            {
-                coordinates.x = Mathf.Max(coordinates.x - 1, 0);
-                rot = 180;
-              //  transform.rotation = Quaternion.Euler(transform.eulerAngles.x, 180, transform.eulerAngles.y);
-            }
-            else if (Input.GetKey("w"))
-            {
-                coordinates.y = Mathf.Min(coordinates.y + 1, maxCoordinate);
-                rot = -90;
-               // transform.rotation = Quaternion.Euler(transform.eulerAngles.x, -90, transform.eulerAngles.y);
             }
             else if (Input.GetKey("s"))
             {
-                coordinates.y = Mathf.Max(coordinates.y - 1, 0);
-                rot = 90;
-                
+                if (coordinates.x - 1 < 0)
+                {
+                    coordinates.x = 0;
+                }
+                else
+                {
+                    coordinates.x--;
+                    ySpeed = jumpSpeed;
+                    jumping = true;
+                    
+                }
+                rot = 180;
             }
-            //transform.rotation = Quaternion.Euler(transform.eulerAngles.x, rot, transform.eulerAngles.z);
-            newPosition = new Vector3(coordinates.x * (-0.4f), transform.position.y, coordinates.y * (-0.4f));
+            else if (Input.GetKey("d"))
+            {
+                if (coordinates.y + 1 > maxCoordinate)
+                {
+                    coordinates.y = maxCoordinate;
+                }
+                else
+                {
+                    coordinates.y++;
+                    ySpeed = jumpSpeed;
+                    jumping = true;
+                }
+                rot = 90;
+            }
+            else if (Input.GetKey("a"))
+            {
+                if (coordinates.y - 1 < 0)
+                {
+                    coordinates.y = 0;
+                }
+                else
+                {
+                    coordinates.y--;
+                    ySpeed = jumpSpeed;
+                    jumping = true;
+                }
+                rot = -90;
+            }
+            newPosition = new Vector3(coordinates.x * (-0.4f), transform.position.y, coordinates.y * (0.4f));
         }
-        Debug.Log(coordinates);
     }
 }
