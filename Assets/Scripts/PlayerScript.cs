@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
 {
-
+    
     private Vector2 coordinates = new Vector2(0, 0);
     private float jumpSpeed = 0.1f;
     private float g = 0.006f;
@@ -14,12 +14,16 @@ public class PlayerScript : MonoBehaviour
     private Vector3 newPosition;
     private int rot;
     private int maxCoordinate = 19;
-
+    private Animator anim;
+    private float delayDuration = 0.2f;
+    private float startTime;
 
     void Start()
     {
         newPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         landingY = transform.position.y;
+        anim = transform.GetComponent<Animator>();
+        startTime = Time.time;
     } 
 
     public float getLandingY()
@@ -31,17 +35,20 @@ public class PlayerScript : MonoBehaviour
     void Update()
     {
         transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(transform.eulerAngles.x, rot, transform.eulerAngles.z), 30);
-        transform.position = Vector3.Lerp(transform.position, newPosition, 0.1f);
-        transform.position = new Vector3(transform.position.x, transform.position.y + ySpeed, transform.position.z);
-        if ((ySpeed<0)&&(transform.position.y - landingY < 0.05f))
+        if ((Time.time - startTime) > delayDuration)
         {
-            transform.position = new Vector3(newPosition.x, landingY, newPosition.z);
-            ySpeed = 0;
-            jumping = false;
+            anim.SetBool("isJumping", false);
+            transform.position = Vector3.Lerp(transform.position, newPosition, 0.1f);
+            transform.position = new Vector3(transform.position.x, transform.position.y + ySpeed, transform.position.z);
+            if ((ySpeed < 0) && (transform.position.y - landingY < 0.05f))
+            {
+                transform.position = new Vector3(newPosition.x, landingY, newPosition.z);
+                ySpeed = 0;
+                jumping = false;
+            }
+            else if (jumping) ySpeed -= g;
+            Debug.Log(ySpeed);
         }
-        else if (jumping) ySpeed -= g;
-        Debug.Log(ySpeed);
-        
         if (ySpeed==0) {
             if (Input.GetKey("w"))
             {
@@ -49,9 +56,12 @@ public class PlayerScript : MonoBehaviour
                     coordinates.x = maxCoordinate;
                 }
                 else {
+                    anim.SetBool("isJumping", true);
+                    anim.Play("Jump");
                     coordinates.x++;
                     ySpeed = jumpSpeed;
                     jumping = true;
+                    startTime = Time.time;
                 }
                 rot = 0;
             }
@@ -63,10 +73,12 @@ public class PlayerScript : MonoBehaviour
                 }
                 else
                 {
+                    anim.SetBool("isJumping", true);
+                    anim.Play("Jump");
                     coordinates.x--;
                     ySpeed = jumpSpeed;
                     jumping = true;
-                    
+                    startTime = Time.time;
                 }
                 rot = 180;
             }
@@ -78,9 +90,12 @@ public class PlayerScript : MonoBehaviour
                 }
                 else
                 {
+                    anim.SetBool("isJumping", true);
+                    anim.Play("Jump");
                     coordinates.y++;
                     ySpeed = jumpSpeed;
                     jumping = true;
+                    startTime = Time.time;
                 }
                 rot = 90;
             }
@@ -92,12 +107,20 @@ public class PlayerScript : MonoBehaviour
                 }
                 else
                 {
+                    anim.SetBool("isJumping", true);
+                    anim.Play("Jump");
                     coordinates.y--;
                     ySpeed = jumpSpeed;
                     jumping = true;
+                    startTime = Time.time;
                 }
                 rot = -90;
             }
+            else
+            {
+                anim.SetBool("isJumping", false);
+            }
+
             newPosition = new Vector3(coordinates.x * (-0.4f), transform.position.y, coordinates.y * (0.4f));
         }
     }
