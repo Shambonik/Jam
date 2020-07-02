@@ -18,6 +18,6 @@ public class CameraScript : MonoBehaviour
     void Update()
     {
         newPosition = player.transform.position - nullPoint;
-        transform.position = Vector3.Lerp(transform.position, new Vector3(newPosition.x, player.GetComponent<PlayerScript>().getLandingY()-nullPoint.y, newPosition.z), 0.05f);
+        transform.position = Vector3.Lerp(transform.position, new Vector3(newPosition.x, player.GetComponent<PlayerScript>().getLandingY()-nullPoint.y, newPosition.z), 0.75f*Time.deltaTime);
     }
 }

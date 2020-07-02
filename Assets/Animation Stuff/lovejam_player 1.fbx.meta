@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4ed738761dfe0d34293268df242f2f29
+guid: 6ba438aec4b0a1743b49e964925f03b6
 ModelImporter:
   serializedVersion: 25
   internalIDToNameTable:
@@ -170,7 +170,7 @@ ModelImporter:
       takeName: Armature|JumpAnimation
       internalID: -8015573827971123036
       firstFrame: 0
-      lastFrame: 86
+      lastFrame: 50
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

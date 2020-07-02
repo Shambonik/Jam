@@ -7,7 +7,7 @@ public class PlayerScript : MonoBehaviour
     
     private Vector2 coordinates = new Vector2(0, 0);
     private float jumpSpeed = 0.1f;
-    private float g = 0.006f;
+    private float g = 0.0048f;
     private float ySpeed = 0;
     private float landingY;
     private bool jumping = false;
@@ -15,8 +15,9 @@ public class PlayerScript : MonoBehaviour
     private int rot;
     private int maxCoordinate = 19;
     private Animator anim;
-    private float delayDuration = 0.2f;
+    private float delayDuration = 8;
     private float startTime;
+    private RaycastBoxScript raycastBoxScript;
 
     void Start()
     {
@@ -24,6 +25,7 @@ public class PlayerScript : MonoBehaviour
         landingY = transform.position.y;
         anim = transform.GetComponent<Animator>();
         startTime = Time.time;
+        raycastBoxScript = GameObject.FindGameObjectWithTag("RaycastBox").GetComponent<RaycastBoxScript>();
     } 
 
     public float getLandingY()
@@ -34,20 +36,30 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(transform.eulerAngles.x, rot, transform.eulerAngles.z), 30);
-        if ((Time.time - startTime) > delayDuration)
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(transform.eulerAngles.x, rot, transform.eulerAngles.z), 800*Time.deltaTime);
+        if ((Time.time - startTime) > delayDuration*Time.deltaTime)
         {
             anim.SetBool("isJumping", false);
-            transform.position = Vector3.Lerp(transform.position, newPosition, 0.1f);
+            transform.position = Vector3.Lerp(transform.position, newPosition, 3.2f*Time.deltaTime);
             transform.position = new Vector3(transform.position.x, transform.position.y + ySpeed, transform.position.z);
-            if ((ySpeed < 0) && (transform.position.y - landingY < 0.05f))
+            RaycastHit hit;
+            if ((ySpeed < 0) && (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 0.22f)))
             {
+                if (transform.position.y - landingY > 0.2f) landingY += 0.4f;
                 transform.position = new Vector3(newPosition.x, landingY, newPosition.z);
                 ySpeed = 0;
                 jumping = false;
             }
-            else if (jumping) ySpeed -= g;
-            Debug.Log(ySpeed);
+            else if (jumping)
+            {
+                ySpeed -= g;
+                if (transform.position.y - landingY < -0.1f) landingY -= 0.4f;
+                if (transform.position.y < -0.4f)
+                {
+                    ySpeed = 0;
+                    jumping = false;
+                }
+            }
         }
         if (ySpeed==0) {
             if (Input.GetKey("w"))
@@ -55,7 +67,8 @@ public class PlayerScript : MonoBehaviour
                 if (coordinates.x + 1 > maxCoordinate) {
                     coordinates.x = maxCoordinate;
                 }
-                else {
+                else if(!raycastBoxScript.obstacle(Vector3.left))
+                {
                     anim.SetBool("isJumping", true);
                     anim.Play("Jump");
                     coordinates.x++;
@@ -71,7 +84,7 @@ public class PlayerScript : MonoBehaviour
                 {
                     coordinates.x = 0;
                 }
-                else
+                else if (!raycastBoxScript.obstacle(Vector3.right))
                 {
                     anim.SetBool("isJumping", true);
                     anim.Play("Jump");
@@ -88,7 +101,7 @@ public class PlayerScript : MonoBehaviour
                 {
                     coordinates.y = maxCoordinate;
                 }
-                else
+                else if (!raycastBoxScript.obstacle(Vector3.forward))
                 {
                     anim.SetBool("isJumping", true);
                     anim.Play("Jump");
@@ -105,7 +118,7 @@ public class PlayerScript : MonoBehaviour
                 {
                     coordinates.y = 0;
                 }
-                else
+                else if (!raycastBoxScript.obstacle(Vector3.back))
                 {
                     anim.SetBool("isJumping", true);
                     anim.Play("Jump");
@@ -124,4 +137,6 @@ public class PlayerScript : MonoBehaviour
             newPosition = new Vector3(coordinates.x * (-0.4f), transform.position.y, coordinates.y * (0.4f));
         }
     }
+
+
 }
