@@ -5,7 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Water
-  - RaycastBox
+  - RaycastBoxTop
+  - RaycastBoxBottom
   layers:
   - Default
   - TransparentFX

@@ -16,9 +16,12 @@ public class PlayerScript : MonoBehaviour
     private int maxCoordinate = 19;
     private Animator anim;
     private float delayDuration = 8;
+    private float shortDelayDuration = 4;
     private float startTime;
-    private RaycastBoxScript raycastBoxScript;
+    private RaycastBoxScript raycastBoxTop;
+    private RaycastBoxScript raycastBoxBottom;
     private bool landing = false;
+    private float blockSide = 0.4f;
 
     void Start()
     {
@@ -26,7 +29,8 @@ public class PlayerScript : MonoBehaviour
         landingY = transform.position.y;
         anim = transform.GetComponent<Animator>();
         startTime = Time.time;
-        raycastBoxScript = GameObject.FindGameObjectWithTag("RaycastBox").GetComponent<RaycastBoxScript>();
+        raycastBoxTop = GameObject.FindGameObjectWithTag("RaycastBoxTop").GetComponent<RaycastBoxScript>();
+        raycastBoxBottom = GameObject.FindGameObjectWithTag("RaycastBoxBottom").GetComponent<RaycastBoxScript>();
     }
 
     public float getLandingY()
@@ -37,37 +41,63 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (jumping) { 
         transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(transform.eulerAngles.x, rot, transform.eulerAngles.z), 800 * Time.deltaTime);
-        if ((Time.time - startTime) > delayDuration * Time.deltaTime)
-        {
-            anim.SetBool("isJumping", false);
-            transform.position = Vector3.Lerp(transform.position, newPosition, 3.2f * Time.deltaTime);
-            transform.position = new Vector3(transform.position.x, transform.position.y + ySpeed, transform.position.z);
-            RaycastHit hit;
-            if ((ySpeed < 0) && (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 0.2f)))
+            if ((Time.time - startTime) > shortDelayDuration * Time.deltaTime)
             {
-                if (transform.position.y - landingY > 0.18f) landingY += 0.4f;
-                landing = true;
-            }
-            else if (jumping)
-            {
-                ySpeed -= g;
-                if (transform.position.y - landingY < -0.15f) landingY -= 0.4f;
-                if (transform.position.y < -0.4f)
+                anim.SetBool("isJumping", false);
+                transform.position = Vector3.Lerp(transform.position, newPosition, 3.2f * Time.deltaTime);
+                transform.position = new Vector3(transform.position.x, transform.position.y + ySpeed, transform.position.z);
+
+                if ((ySpeed < 0) && (transform.position.y - landingY < 0.1f))
                 {
-                    ySpeed = 0;
-                    jumping = false;
+                    RaycastHit hit;
+                    if ((!landing) && Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 0.2f)) landing = true;
+                    if (transform.position.y - landingY < 0.05f)
+                    {
+                        if (landing)
+                        {
+                            Debug.Log(landingY);
+                            transform.position = new Vector3(newPosition.x, landingY, newPosition.z);
+                            Debug.Log("!!!" + transform.position.y);
+                            ySpeed = 0;
+                            jumping = false;
+                            landing = false;
+                            startTime = Time.time;
+                        }
+                        else landingY -= blockSide;
+                    }
                 }
+                else ySpeed -= g;
             }
-            if (landing && (transform.position.y - landingY < 0.05f))
-            {
-                transform.position = new Vector3(newPosition.x, landingY, newPosition.z);
-                ySpeed = 0;
-                jumping = false;
-                landing = false;
-            }
+            //RaycastHit hit;
+            //if ((ySpeed < 0) && (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 0.2f)))
+            //{
+
+            //    if (transform.position.y - landingY > 0.18f) landingY += 0.4f;
+            //    landing = true;
+            //}
+            //else if (jumping)
+            //{
+            //    ySpeed -= g;
+            //    if (transform.position.y - landingY < -0.15f) landingY -= 0.4f;
+            //    if (transform.position.y < -0.4f)
+            //    {
+            //        ySpeed = 0;
+            //        jumping = false;
+            //        startTime = Time.time;
+            //    }
+            //}
+            //if (landing && (transform.position.y - landingY < 0.05f))
+            //{
+            //    transform.position = new Vector3(newPosition.x, landingY, newPosition.z);
+            //    ySpeed = 0;
+            //    jumping = false;
+            //    landing = false;
+            //    startTime = Time.time;
+            //}
         }
-        if (ySpeed == 0)
+        if ((ySpeed == 0)&&(Time.time-startTime > delayDuration * Time.deltaTime))
         {
             if (Input.GetKey("w"))
             {
@@ -75,14 +105,10 @@ public class PlayerScript : MonoBehaviour
                 {
                     coordinates.x = maxCoordinate;
                 }
-                else if (!raycastBoxScript.obstacle(Vector3.left))
+                else if (!raycastBoxTop.obstacle(Vector3.left))
                 {
-                    anim.SetBool("isJumping", true);
-                    anim.Play("Jump");
+                    setJump(Vector3.left);
                     coordinates.x++;
-                    ySpeed = jumpSpeed;
-                    jumping = true;
-                    startTime = Time.time;
                 }
                 rot = 0;
             }
@@ -92,14 +118,10 @@ public class PlayerScript : MonoBehaviour
                 {
                     coordinates.x = 0;
                 }
-                else if (!raycastBoxScript.obstacle(Vector3.right))
+                else if (!raycastBoxTop.obstacle(Vector3.right))
                 {
-                    anim.SetBool("isJumping", true);
-                    anim.Play("Jump");
+                    setJump(Vector3.right);
                     coordinates.x--;
-                    ySpeed = jumpSpeed;
-                    jumping = true;
-                    startTime = Time.time;
                 }
                 rot = 180;
             }
@@ -109,14 +131,10 @@ public class PlayerScript : MonoBehaviour
                 {
                     coordinates.y = maxCoordinate;
                 }
-                else if (!raycastBoxScript.obstacle(Vector3.forward))
+                else if (!raycastBoxTop.obstacle(Vector3.forward))
                 {
-                    anim.SetBool("isJumping", true);
-                    anim.Play("Jump");
+                    setJump(Vector3.forward);
                     coordinates.y++;
-                    ySpeed = jumpSpeed;
-                    jumping = true;
-                    startTime = Time.time;
                 }
                 rot = 90;
             }
@@ -126,14 +144,10 @@ public class PlayerScript : MonoBehaviour
                 {
                     coordinates.y = 0;
                 }
-                else if (!raycastBoxScript.obstacle(Vector3.back))
+                else if (!raycastBoxTop.obstacle(Vector3.back))
                 {
-                    anim.SetBool("isJumping", true);
-                    anim.Play("Jump");
+                    setJump(Vector3.back);
                     coordinates.y--;
-                    ySpeed = jumpSpeed;
-                    jumping = true;
-                    startTime = Time.time;
                 }
                 rot = -90;
             }
@@ -142,9 +156,19 @@ public class PlayerScript : MonoBehaviour
                 anim.SetBool("isJumping", false);
             }
 
-            newPosition = new Vector3(coordinates.x * (-0.4f), transform.position.y, coordinates.y * (0.4f));
+            newPosition = new Vector3(coordinates.x * (-blockSide), transform.position.y, coordinates.y * (blockSide));
         }
+
     }
 
+    private void setJump(Vector3 direction)
+    {
+        anim.SetBool("isJumping", true);
+        anim.Play("Jump");
+        ySpeed = jumpSpeed;
+        jumping = true;
+        if (raycastBoxBottom.obstacle(direction)) landingY+=blockSide;
+        startTime = Time.time;
+    }
 
 }
