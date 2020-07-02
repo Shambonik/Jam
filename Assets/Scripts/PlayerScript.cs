@@ -22,6 +22,7 @@ public class PlayerScript : MonoBehaviour
     private RaycastBoxScript raycastBoxBottom;
     private bool landing = false;
     private float blockSide = 0.4f;
+    private CameraScript cameraScript;
 
     void Start()
     {
@@ -31,6 +32,7 @@ public class PlayerScript : MonoBehaviour
         startTime = Time.time;
         raycastBoxTop = GameObject.FindGameObjectWithTag("RaycastBoxTop").GetComponent<RaycastBoxScript>();
         raycastBoxBottom = GameObject.FindGameObjectWithTag("RaycastBoxBottom").GetComponent<RaycastBoxScript>();
+        cameraScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraScript>();
     }
 
     public float getLandingY()
@@ -41,8 +43,8 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (jumping) { 
         transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(transform.eulerAngles.x, rot, transform.eulerAngles.z), 800 * Time.deltaTime);
+        if (jumping) { 
             if ((Time.time - startTime) > shortDelayDuration * Time.deltaTime)
             {
                 anim.SetBool("isJumping", false);
@@ -99,6 +101,7 @@ public class PlayerScript : MonoBehaviour
         }
         if ((ySpeed == 0)&&(Time.time-startTime > delayDuration * Time.deltaTime))
         {
+            cameraScript.setMaterial();
             if (Input.GetKey("w"))
             {
                 if (coordinates.x + 1 > maxCoordinate)
