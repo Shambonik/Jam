@@ -7,12 +7,14 @@ public class RaycastBoxScript : MonoBehaviour
 
     private float deltaY;
     private GameObject player;
+    private LayerMask layerIgnore;
     //public bool[] obstacle = { false, false, false, false };
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         deltaY = transform.position.y - player.transform.position.y;
+        layerIgnore = LayerMask.GetMask("Ignore Raycast");
     }
 
     // Update is called once per frame
@@ -25,6 +27,7 @@ public class RaycastBoxScript : MonoBehaviour
     {
         RaycastHit hit;
         if ((Physics.Raycast(transform.position, transform.TransformDirection(direction), out hit, 0.4f))) return true;
+        if ((Physics.Raycast(transform.position, transform.TransformDirection(direction), out hit, 0.4f, layerIgnore))) return true;
         return false;
     }
 }

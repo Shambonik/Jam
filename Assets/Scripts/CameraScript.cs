@@ -8,13 +8,15 @@ public class CameraScript : MonoBehaviour
     private Vector3 nullPoint;
     private Vector3 newPosition;
     public Material transparentMaterial;
-    private Material originalMaterial;
-    private GameObject objectMaterial;
+    private List<Material> originalMaterial;
+    private List<GameObject> objectMaterial;
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         nullPoint = player.transform.position - transform.position;
+        objectMaterial = new List<GameObject>();
+        originalMaterial = new List<Material>();
     }
 
     // Update is called once per frame
@@ -26,20 +28,33 @@ public class CameraScript : MonoBehaviour
 
     public void setMaterial()
     {
-        RaycastHit hit;
-        Ray ray = new Ray(newPosition, new Vector3(player.transform.position.x, player.transform.position.y - 0.05f, player.transform.position.z) - newPosition);
-        Physics.Raycast(ray, out hit);
-        if (objectMaterial != null)
+        for (int i = 0; i < objectMaterial.Count; i++)
         {
-            objectMaterial.GetComponent<Renderer>().material = originalMaterial;
+            if (objectMaterial[i] != null && originalMaterial[i] != null)
+            {
+                objectMaterial[i].GetComponent<Renderer>().material = originalMaterial[i];
+                objectMaterial[i].layer = 0;
+            }
         }
+        objectMaterial = new List<GameObject>();
+        originalMaterial = new List<Material>();
+        raycastMaterial();
+    }
+
+    public void raycastMaterial()
+    {
+        Ray ray = new Ray(newPosition, new Vector3(player.transform.position.x, player.transform.position.y+0.3f, player.transform.position.z) - newPosition);
+        RaycastHit hit;
+        Physics.Raycast(ray, out hit);
         if (hit.collider != null)
         {
             if (hit.collider.gameObject != player)
             {
-                objectMaterial = hit.collider.gameObject;
-                originalMaterial = objectMaterial.GetComponent<Renderer>().material;
-                objectMaterial.GetComponent<Renderer>().material = transparentMaterial;
+                objectMaterial.Add(hit.collider.gameObject);
+                originalMaterial.Add(hit.collider.gameObject.GetComponent<Renderer>().material);
+                hit.collider.gameObject.GetComponent<Renderer>().material = transparentMaterial;
+                hit.collider.gameObject.layer = 2;
+                raycastMaterial();
             }
         }
     }

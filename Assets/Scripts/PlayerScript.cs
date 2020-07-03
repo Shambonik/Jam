@@ -23,16 +23,24 @@ public class PlayerScript : MonoBehaviour
     private bool landing = false;
     private float blockSide = 0.4f;
     private CameraScript cameraScript;
+    private LayerMask layerIgnore;
+    private GameObject panelDeath;
+    private GameObject textDeath;
 
     void Start()
     {
         newPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         landingY = transform.position.y;
         anim = transform.GetComponent<Animator>();
+        textDeath = GameObject.FindGameObjectWithTag("TextDeath");
+        panelDeath = GameObject.FindGameObjectWithTag("PanelDeath");
+        panelDeath.SetActive(false);
+        textDeath.SetActive(false);
         startTime = Time.time;
         raycastBoxTop = GameObject.FindGameObjectWithTag("RaycastBoxTop").GetComponent<RaycastBoxScript>();
         raycastBoxBottom = GameObject.FindGameObjectWithTag("RaycastBoxBottom").GetComponent<RaycastBoxScript>();
         cameraScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraScript>();
+        layerIgnore = LayerMask.GetMask("Ignore Raycast");
     }
 
     public float getLandingY()
@@ -54,14 +62,12 @@ public class PlayerScript : MonoBehaviour
                 if ((ySpeed < 0) && (transform.position.y - landingY < 0.1f))
                 {
                     RaycastHit hit;
-                    if ((!landing) && Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 0.2f)) landing = true;
+                    if ((!landing) && (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 0.2f)) || Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 0.2f, layerIgnore)) landing = true;
                     if (transform.position.y - landingY < 0.05f)
                     {
                         if (landing)
                         {
-                            Debug.Log(landingY);
                             transform.position = new Vector3(newPosition.x, landingY, newPosition.z);
-                            Debug.Log("!!!" + transform.position.y);
                             ySpeed = 0;
                             jumping = false;
                             landing = false;
@@ -70,34 +76,19 @@ public class PlayerScript : MonoBehaviour
                         else landingY -= blockSide;
                     }
                 }
-                else ySpeed -= g;
+                else
+                {
+                    ySpeed -= g;
+                    if(transform.position.y < -1f)
+                    {
+                        panelDeath.SetActive(true);
+                        textDeath.SetActive(true);
+                        ySpeed = 0;
+                        jumping = false;
+                        landing = false;
+                    }
+                }
             }
-            //RaycastHit hit;
-            //if ((ySpeed < 0) && (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 0.2f)))
-            //{
-
-            //    if (transform.position.y - landingY > 0.18f) landingY += 0.4f;
-            //    landing = true;
-            //}
-            //else if (jumping)
-            //{
-            //    ySpeed -= g;
-            //    if (transform.position.y - landingY < -0.15f) landingY -= 0.4f;
-            //    if (transform.position.y < -0.4f)
-            //    {
-            //        ySpeed = 0;
-            //        jumping = false;
-            //        startTime = Time.time;
-            //    }
-            //}
-            //if (landing && (transform.position.y - landingY < 0.05f))
-            //{
-            //    transform.position = new Vector3(newPosition.x, landingY, newPosition.z);
-            //    ySpeed = 0;
-            //    jumping = false;
-            //    landing = false;
-            //    startTime = Time.time;
-            //}
         }
         if ((ySpeed == 0)&&(Time.time-startTime > delayDuration * Time.deltaTime))
         {

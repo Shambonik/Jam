@@ -7,6 +7,8 @@ TagManager:
   - Water
   - RaycastBoxTop
   - RaycastBoxBottom
+  - PanelDeath
+  - TextDeath
   layers:
   - Default
   - TransparentFX
