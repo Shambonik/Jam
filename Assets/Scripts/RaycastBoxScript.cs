@@ -34,7 +34,7 @@ public class RaycastBoxScript : MonoBehaviour
         return false;
     }
 
-    public GameObject getObjectTag(Vector3 direction)
+    public GameObject getObject(Vector3 direction)
     {
         transform.position = new Vector3(player.transform.position.x - deltaX, player.transform.position.y + deltaY, player.transform.position.z + deltaZ);
         RaycastHit hit;

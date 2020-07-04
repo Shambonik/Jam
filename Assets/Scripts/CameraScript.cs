@@ -28,17 +28,21 @@ public class CameraScript : MonoBehaviour
 
     public void setMaterial()
     {
-        for (int i = 0; i < objectMaterial.Count; i++)
+        try
         {
-            if (objectMaterial[i] != null && originalMaterial[i] != null)
+            for (int i = 0; i < objectMaterial.Count; i++)
             {
-                objectMaterial[i].GetComponent<Renderer>().material = originalMaterial[i];
-                objectMaterial[i].layer = 0;
+                if (objectMaterial[i] != null && originalMaterial[i] != null)
+                {
+                    objectMaterial[i].GetComponent<Renderer>().material = originalMaterial[i];
+                    objectMaterial[i].layer = 0;
+                }
             }
+            objectMaterial = new List<GameObject>();
+            originalMaterial = new List<Material>();
+            raycastMaterial();
         }
-        objectMaterial = new List<GameObject>();
-        originalMaterial = new List<Material>();
-        raycastMaterial();
+        catch (System.Exception e) { }
     }
 
     public void raycastMaterial()

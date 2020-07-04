@@ -160,8 +160,18 @@ public class PlayerScript : MonoBehaviour
                         }
                         else if (!raycastBoxTopScript.obstacle(Vector3.left))
                         {
-                            setJump(Vector3.left);
-                            coordinates.x++;
+                            GameObject bottomObject = raycastBoxBottomScript.getObject(Vector3.left);
+                            if ((bottomObject == null) || (bottomObject.tag != "Lever"))
+                            {
+                                setJump(Vector3.left);
+                                coordinates.x++;
+                            }
+                            else
+                            {
+                                bottomObject.GetComponent<LeverScript>().changePosition();
+                                delayDuration = 32;
+                            }
+                            startTime = Time.time;
                         }
                     }
                 }
@@ -177,8 +187,18 @@ public class PlayerScript : MonoBehaviour
                         }
                         else if (!raycastBoxTopScript.obstacle(Vector3.right))
                         {
-                            setJump(Vector3.right);
-                            coordinates.x--;
+                            GameObject bottomObject = raycastBoxBottomScript.getObject(Vector3.right);
+                            if ((bottomObject == null) || (bottomObject.tag != "Lever"))
+                            {
+                                setJump(Vector3.right);
+                                coordinates.x--;
+                            }
+                            else
+                            {
+                                bottomObject.GetComponent<LeverScript>().changePosition();
+                                delayDuration = 32;
+                            }
+                            startTime = Time.time;
                         }
                     }
                 }
@@ -194,8 +214,18 @@ public class PlayerScript : MonoBehaviour
                         }
                         else if (!raycastBoxTopScript.obstacle(Vector3.forward))
                         {
-                            setJump(Vector3.forward);
-                            coordinates.y++;
+                            GameObject bottomObject = raycastBoxBottomScript.getObject(Vector3.forward);
+                            if ((bottomObject == null) || (bottomObject.tag != "Lever"))
+                            {
+                                setJump(Vector3.forward);
+                                coordinates.y++;
+                            }
+                            else
+                            {
+                                bottomObject.GetComponent<LeverScript>().changePosition();
+                                delayDuration = 32;
+                            }
+                            startTime = Time.time;
                         }
                     }
                 }
@@ -211,8 +241,18 @@ public class PlayerScript : MonoBehaviour
                         }
                         else if (!raycastBoxTopScript.obstacle(Vector3.back))
                         {
-                            setJump(Vector3.back);
-                            coordinates.y--;
+                            GameObject bottomObject = raycastBoxBottomScript.getObject(Vector3.back);
+                            if ((bottomObject == null) || (bottomObject.tag != "Lever"))
+                            {
+                                setJump(Vector3.back);
+                                coordinates.y--;
+                            }
+                            else
+                            {
+                                bottomObject.GetComponent<LeverScript>().changePosition();
+                                delayDuration = 32;
+                            }
+                            startTime = Time.time;
                         }
                     }
                 }
@@ -229,22 +269,22 @@ public class PlayerScript : MonoBehaviour
                 {
                     if (Input.GetKey("w") && ePressed!="w")
                     {
-                        box = raycastBoxBottomScript.getObjectTag(Vector3.left);
+                        box = raycastBoxBottomScript.getObject(Vector3.left);
                         ePressed = "w";
                     }
                     else if (Input.GetKey("s") && ePressed != "s")
                     {
-                        box = raycastBoxBottomScript.getObjectTag(Vector3.right);
+                        box = raycastBoxBottomScript.getObject(Vector3.right);
                         ePressed = "s";
                     }
                     else if (Input.GetKey("d") && ePressed != "d")
                     {
-                        box = raycastBoxBottomScript.getObjectTag(Vector3.forward);
+                        box = raycastBoxBottomScript.getObject(Vector3.forward);
                         ePressed = "d";
                     }
                     else if (Input.GetKey("a") && ePressed != "a")
                     {
-                        box = raycastBoxBottomScript.getObjectTag(Vector3.back);
+                        box = raycastBoxBottomScript.getObject(Vector3.back);
                         ePressed = "a";
                     }
                 }
@@ -300,7 +340,12 @@ public class PlayerScript : MonoBehaviour
         ySpeed = jumpSpeed;
         jumping = true;
         if (raycastBoxBottomScript.obstacle(direction)) landingY+=blockSide;
-        startTime = Time.time;
+        delayDuration = 8;
+        //startTime = Time.time;
     }
 
+    public float getRot()
+    {
+        return rot;
+    }
 }
