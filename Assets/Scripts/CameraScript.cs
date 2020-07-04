@@ -28,21 +28,17 @@ public class CameraScript : MonoBehaviour
 
     public void setMaterial()
     {
-        try
+        for (int i = 0; i < objectMaterial.Count; i++)
         {
-            for (int i = 0; i < objectMaterial.Count; i++)
+            if (objectMaterial[i] != null && originalMaterial[i] != null)
             {
-                if (objectMaterial[i] != null && originalMaterial[i] != null)
-                {
-                    objectMaterial[i].GetComponent<Renderer>().material = originalMaterial[i];
-                    objectMaterial[i].layer = 0;
-                }
+                if(objectMaterial[i].GetComponent<Renderer>()!=null) objectMaterial[i].GetComponent<Renderer>().material = originalMaterial[i];
+                objectMaterial[i].layer = 0;
             }
-            objectMaterial = new List<GameObject>();
-            originalMaterial = new List<Material>();
-            raycastMaterial();
         }
-        catch (System.Exception e) { }
+        objectMaterial = new List<GameObject>();
+        originalMaterial = new List<Material>();
+        raycastMaterial();
     }
 
     public void raycastMaterial()
@@ -55,8 +51,12 @@ public class CameraScript : MonoBehaviour
             if (hit.collider.gameObject != player)
             {
                 objectMaterial.Add(hit.collider.gameObject);
-                originalMaterial.Add(hit.collider.gameObject.GetComponent<Renderer>().material);
-                hit.collider.gameObject.GetComponent<Renderer>().material = transparentMaterial;
+                if (hit.collider.gameObject.GetComponent<Renderer>() != null)
+                {
+                    originalMaterial.Add(hit.collider.gameObject.GetComponent<Renderer>().material);
+                    hit.collider.gameObject.GetComponent<Renderer>().material = transparentMaterial;
+                }
+                else originalMaterial.Add(transparentMaterial);
                 hit.collider.gameObject.layer = 2;
                 raycastMaterial();
             }
