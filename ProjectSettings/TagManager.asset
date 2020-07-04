@@ -11,6 +11,8 @@ TagManager:
   - TextDeath
   - Box
   - Lever
+  - Destructible
+  - Ladder
   layers:
   - Default
   - TransparentFX

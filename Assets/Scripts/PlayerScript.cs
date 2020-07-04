@@ -161,15 +161,23 @@ public class PlayerScript : MonoBehaviour
                         else if (!raycastBoxTopScript.obstacle(Vector3.left))
                         {
                             GameObject bottomObject = raycastBoxBottomScript.getObject(Vector3.left);
-                            if ((bottomObject == null) || (bottomObject.tag != "Lever"))
+                            if ((bottomObject == null) || ((bottomObject.tag != "Lever")&&(bottomObject.tag != "Destructible")))
                             {
                                 setJump(Vector3.left);
                                 coordinates.x++;
                             }
                             else
                             {
-                                bottomObject.GetComponent<LeverScript>().changePosition();
-                                delayDuration = 32;
+                                if ((bottomObject.tag == "Lever"))
+                                {
+                                    bottomObject.GetComponent<LeverScript>().changePosition();
+                                    delayDuration = 32;
+                                }
+                                else if (bottomObject.tag == "Destructible")
+                                {
+                                    bottomObject.GetComponent<DestructibleScript>().destroy();
+                                    delayDuration = 32;
+                                }
                             }
                             startTime = Time.time;
                         }
@@ -188,15 +196,23 @@ public class PlayerScript : MonoBehaviour
                         else if (!raycastBoxTopScript.obstacle(Vector3.right))
                         {
                             GameObject bottomObject = raycastBoxBottomScript.getObject(Vector3.right);
-                            if ((bottomObject == null) || (bottomObject.tag != "Lever"))
+                            if ((bottomObject == null) || ((bottomObject.tag != "Lever") && (bottomObject.tag != "Destructible")))
                             {
                                 setJump(Vector3.right);
                                 coordinates.x--;
                             }
                             else
                             {
-                                bottomObject.GetComponent<LeverScript>().changePosition();
-                                delayDuration = 32;
+                                if ((bottomObject.tag == "Lever"))
+                                {
+                                    bottomObject.GetComponent<LeverScript>().changePosition();
+                                    delayDuration = 32;
+                                }
+                                else if (bottomObject.tag == "Destructible")
+                                {
+                                    bottomObject.GetComponent<DestructibleScript>().destroy();
+                                    delayDuration = 32;
+                                }
                             }
                             startTime = Time.time;
                         }
@@ -215,15 +231,23 @@ public class PlayerScript : MonoBehaviour
                         else if (!raycastBoxTopScript.obstacle(Vector3.forward))
                         {
                             GameObject bottomObject = raycastBoxBottomScript.getObject(Vector3.forward);
-                            if ((bottomObject == null) || (bottomObject.tag != "Lever"))
+                            if ((bottomObject == null) || ((bottomObject.tag != "Lever") && (bottomObject.tag != "Destructible")))
                             {
                                 setJump(Vector3.forward);
                                 coordinates.y++;
                             }
                             else
                             {
-                                bottomObject.GetComponent<LeverScript>().changePosition();
-                                delayDuration = 32;
+                                if ((bottomObject.tag == "Lever"))
+                                {
+                                    bottomObject.GetComponent<LeverScript>().changePosition();
+                                    delayDuration = 32;
+                                }
+                                else if (bottomObject.tag == "Destructible")
+                                {
+                                    bottomObject.GetComponent<DestructibleScript>().destroy();
+                                    delayDuration = 32;
+                                }
                             }
                             startTime = Time.time;
                         }
@@ -242,15 +266,23 @@ public class PlayerScript : MonoBehaviour
                         else if (!raycastBoxTopScript.obstacle(Vector3.back))
                         {
                             GameObject bottomObject = raycastBoxBottomScript.getObject(Vector3.back);
-                            if ((bottomObject == null) || (bottomObject.tag != "Lever"))
+                            if ((bottomObject == null) || ((bottomObject.tag != "Lever") && (bottomObject.tag != "Destructible")))
                             {
                                 setJump(Vector3.back);
                                 coordinates.y--;
                             }
                             else
                             {
-                                bottomObject.GetComponent<LeverScript>().changePosition();
-                                delayDuration = 32;
+                                if ((bottomObject.tag == "Lever"))
+                                {
+                                    bottomObject.GetComponent<LeverScript>().changePosition();
+                                    delayDuration = 32;
+                                }
+                                else if (bottomObject.tag == "Destructible")
+                                {
+                                    bottomObject.GetComponent<DestructibleScript>().destroy();
+                                    delayDuration = 32;
+                                }
                             }
                             startTime = Time.time;
                         }

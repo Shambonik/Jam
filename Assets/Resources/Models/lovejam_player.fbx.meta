@@ -62,7 +62,7 @@ ModelImporter:
       name: Armature|AttackAnimation
       takeName: Armature|AttackAnimation
       internalID: 1825870284180692390
-      firstFrame: 0
+      firstFrame: 35
       lastFrame: 91
       wrapMode: 0
       orientationOffsetY: 0
@@ -368,7 +368,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.001
+    globalScale: 0.1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
