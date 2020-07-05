@@ -112,6 +112,7 @@ public class PlayerScript : MonoBehaviour
                     ySpeed -= g;
                     if (transform.position.y < -1f)
                     {
+                        //FindObjectOfType<MainMenuScript>().GetComponent<Canvas>().enabled = true;
                         panelDeath.SetActive(true);
                         textDeath.SetActive(true);
                         ySpeed = 0;
@@ -499,5 +500,15 @@ public class PlayerScript : MonoBehaviour
     public float getRot()
     {
         return rot;
+    }
+
+    private void OnEnable()
+    {
+        Time.timeScale = 1.0f;
+    }
+
+    private void OnDisable()
+    {
+        Time.timeScale = 0f;
     }
 }

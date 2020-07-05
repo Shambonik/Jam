@@ -115,7 +115,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - Boolean_8A2B8817: 0
-    - _AlphaClip: 0
+    - _AlphaClip: 1
     - _Blend: 0
     - _BumpScale: 1
     - _Cull: 2
