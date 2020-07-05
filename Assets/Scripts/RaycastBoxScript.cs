@@ -5,7 +5,7 @@ using UnityEngine;
 public class RaycastBoxScript : MonoBehaviour
 {
 
-    private float deltaY;
+    public float deltaY;
     private GameObject player;
     private LayerMask layerIgnore;
     private float originalDeltaY;
@@ -15,7 +15,7 @@ public class RaycastBoxScript : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        deltaY = transform.position.y - player.transform.position.y;
+        //deltaY = transform.position.y - player.transform.position.y;
         layerIgnore = LayerMask.GetMask("Ignore Raycast");
         originalDeltaY = deltaY;
     }

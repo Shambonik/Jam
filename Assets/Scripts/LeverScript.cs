@@ -53,4 +53,15 @@ public class LeverScript : MonoBehaviour
         startTime = Time.time;
         newRotation = Quaternion.Euler(-120, lever.transform.localRotation.eulerAngles.y, lever.transform.localRotation.eulerAngles.z);
     }
+
+    public bool getActivated()
+    {
+        return activated;
+    }
+
+    public void setActivated(bool act)
+    {
+        if(act!=activated) newRotation = Quaternion.Euler(-120, lever.transform.localRotation.eulerAngles.y, lever.transform.localRotation.eulerAngles.z);
+        activated = act;
+    }
 }

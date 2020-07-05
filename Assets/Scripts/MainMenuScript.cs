@@ -12,11 +12,12 @@ public class MainMenuScript : MonoBehaviour
     public RectTransform bgImage;
     public RectTransform restartButton;
     public GameObject menu;
-    public PlayerScript player;
+    private PlayerScript player;
     private bool death = false;
     
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
         startButton.sizeDelta = new Vector2(Screen.width / 4, Screen.height / 5);
         startButton.position = new Vector3(Screen.width / 2, Screen.height * 5 / 7);
         startButton.gameObject.GetComponentInChildren<Text>().fontSize = Screen.height/15;
@@ -51,7 +52,7 @@ public class MainMenuScript : MonoBehaviour
             StartCoroutine("playerDeath");
         }*/
 
-        if (player.transform.position.y < -1f)
+        if (player.getDead())
         {
             death = true;
             StartCoroutine("playerDeath");
@@ -59,6 +60,7 @@ public class MainMenuScript : MonoBehaviour
 
     }
 
+   
     public void LoadScene(int sceneNumber)
     {
         SceneManager.LoadScene(sceneNumber);
@@ -91,7 +93,7 @@ public class MainMenuScript : MonoBehaviour
 
     IEnumerator playerDeath()
     {
-        yield return new WaitForSeconds(8f);
+        yield return new WaitForSeconds(6.5f);
         RestartLevel();
         //yield return new WaitForSeconds(8f);
     }

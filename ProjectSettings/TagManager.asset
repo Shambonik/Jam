@@ -13,6 +13,8 @@ TagManager:
   - Lever
   - Destructible
   - Ladder
+  - Pause Menu
+  - LevelChangePanel
   layers:
   - Default
   - TransparentFX

@@ -6,14 +6,14 @@ public class PlayerScript : MonoBehaviour
 {
 
     private Vector2 coordinates = new Vector2(0, 0);
-    private float jumpSpeed = 0.1f;
+    private float jumpSpeed;
+    private float standartJumpSpeed = 0.1f;
     private float g = 0.0048f;
     private float ySpeed = 0;
     private float landingY;
     private bool jumping = false;
     private Vector3 newPosition;
     private int rot;
-    private int maxCoordinate = 19;
     private Animator anim;
     private float delayDuration = 8;
     private float shortDelayDuration = 4;
@@ -34,6 +34,7 @@ public class PlayerScript : MonoBehaviour
     private bool ladder = false;
     private float ladderUp = 0;
     private bool onLadder = false;
+    private bool dead = false;
 
     void Start()
     {
@@ -46,9 +47,11 @@ public class PlayerScript : MonoBehaviour
         textDeath.SetActive(false);
         startTime = Time.time;
         raycastBoxTopScript = GameObject.FindGameObjectWithTag("RaycastBoxTop").GetComponent<RaycastBoxScript>();
+        Debug.Log(raycastBoxTopScript);
         raycastBoxBottomScript = GameObject.FindGameObjectWithTag("RaycastBoxBottom").GetComponent<RaycastBoxScript>();
         cameraScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraScript>();
         layerIgnore = LayerMask.GetMask("Ignore Raycast");
+        jumpSpeed = standartJumpSpeed;
     }
 
     public float getLandingY()
@@ -67,7 +70,7 @@ public class PlayerScript : MonoBehaviour
             {
                 ladder = false;
                 ladderUp = 0;
-                //anim.Play("IdleLadder");
+                anim.Play("LadderIdle");
             }
         }
         if (((Mathf.Abs(transform.rotation.eulerAngles.y - rot) < 0.02f) || (Mathf.Abs(transform.rotation.eulerAngles.y - rot - 360) < 0.02f)) && (box != null) && (box.tag == "Box"))
@@ -93,7 +96,19 @@ public class PlayerScript : MonoBehaviour
                 if ((ySpeed < 0) && (transform.position.y - landingY < 0.1f))
                 {
                     RaycastHit hit;
-                    if ((!landing) && ((Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 0.2f)) || Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 0.2f, layerIgnore))) landing = true;
+                    if ((!landing) && ((Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 0.2f)) || Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 0.2f, layerIgnore)))
+                    {
+                        if ((Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 0.2f) && (hit.transform.tag == "Water")) || 
+                            (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 0.2f, layerIgnore) && (hit.transform.tag == "Water")))
+                        {
+                            dead = true;
+                            panelDeath.SetActive(true);
+                            textDeath.SetActive(true);
+                            ySpeed = 0;
+                            jumping = false;
+                        }
+                        else landing = true;
+                    }
                     if (transform.position.y - landingY < 0.05f)
                     {
                         if (landing)
@@ -110,9 +125,10 @@ public class PlayerScript : MonoBehaviour
                 else
                 {
                     ySpeed -= g;
-                    if (transform.position.y < -1f)
+                    if (transform.position.y < -100f)
                     {
                         //FindObjectOfType<MainMenuScript>().GetComponent<Canvas>().enabled = true;
+                        dead = true;
                         panelDeath.SetActive(true);
                         textDeath.SetActive(true);
                         ySpeed = 0;
@@ -167,16 +183,13 @@ public class PlayerScript : MonoBehaviour
                     {
                         if (boxInHands) raycastBoxTopScript.changeDelta(0.4f, 0.2f, 0);
                         else raycastBoxTopScript.setOriginalDelta();
-                        if (coordinates.x + 1 > maxCoordinate)
-                        {
-                            coordinates.x = maxCoordinate;
-                        }
-                        else if (!raycastBoxTopScript.obstacle(Vector3.left))
+                        if (!raycastBoxTopScript.obstacle(Vector3.left))
                         {
                             GameObject bottomObject = raycastBoxBottomScript.getObject(Vector3.left);
                             if ((bottomObject == null) || ((bottomObject.tag != "Lever") && (bottomObject.tag != "Destructible")))
                             {
                                 setJump(Vector3.left);
+                                jumpSpeed = standartJumpSpeed;
                                 coordinates.x++;
                             }
                             else
@@ -201,6 +214,7 @@ public class PlayerScript : MonoBehaviour
                             delayDuration = 32;
                             landingY += blockSide;
                             ladder = true;
+                            jumpSpeed = standartJumpSpeed + 0.03f;
                         }
                         startTime = Time.time;
                     }
@@ -211,16 +225,13 @@ public class PlayerScript : MonoBehaviour
                     {
                         if (boxInHands) raycastBoxTopScript.changeDelta(-0.4f, 0.2f, 0);
                         else raycastBoxTopScript.setOriginalDelta();
-                        if (coordinates.x - 1 < 0)
-                        {
-                            coordinates.x = 0;
-                        }
-                        else if (!raycastBoxTopScript.obstacle(Vector3.right))
+                        if (!raycastBoxTopScript.obstacle(Vector3.right))
                         {
                             GameObject bottomObject = raycastBoxBottomScript.getObject(Vector3.right);
                             if ((bottomObject == null) || ((bottomObject.tag != "Lever") && (bottomObject.tag != "Destructible")))
                             {
                                 setJump(Vector3.right);
+                                jumpSpeed = standartJumpSpeed;
                                 coordinates.x--;
                             }
                             else
@@ -245,6 +256,7 @@ public class PlayerScript : MonoBehaviour
                             delayDuration = 32;
                             landingY += blockSide;
                             ladder = true;
+                            jumpSpeed = standartJumpSpeed + 0.03f;
                         }
                         startTime = Time.time;
                     }
@@ -255,16 +267,13 @@ public class PlayerScript : MonoBehaviour
                     {
                         if (boxInHands) raycastBoxTopScript.changeDelta(0, 0.2f, 0.4f);
                         else raycastBoxTopScript.setOriginalDelta();
-                        if (coordinates.y + 1 > maxCoordinate)
-                        {
-                            coordinates.y = maxCoordinate;
-                        }
-                        else if (!raycastBoxTopScript.obstacle(Vector3.forward))
+                        if (!raycastBoxTopScript.obstacle(Vector3.forward))
                         {
                             GameObject bottomObject = raycastBoxBottomScript.getObject(Vector3.forward);
                             if ((bottomObject == null) || ((bottomObject.tag != "Lever") && (bottomObject.tag != "Destructible")))
                             {
                                 setJump(Vector3.forward);
+                                jumpSpeed = standartJumpSpeed;
                                 coordinates.y++;
                             }
                             else
@@ -289,6 +298,7 @@ public class PlayerScript : MonoBehaviour
                             delayDuration = 32;
                             landingY += blockSide;
                             ladder = true;
+                            jumpSpeed = standartJumpSpeed + 0.03f;
                         }
                         startTime = Time.time;
                     }
@@ -299,16 +309,13 @@ public class PlayerScript : MonoBehaviour
                     {
                         if (boxInHands) raycastBoxTopScript.changeDelta(0, 0.2f, -0.4f);
                         else raycastBoxTopScript.setOriginalDelta();
-                        if (coordinates.y - 1 < 0)
-                        {
-                            coordinates.y = 0;
-                        }
-                        else if (!raycastBoxTopScript.obstacle(Vector3.back))
+                        if (!raycastBoxTopScript.obstacle(Vector3.back))
                         {
                             GameObject bottomObject = raycastBoxBottomScript.getObject(Vector3.back);
                             if ((bottomObject == null) || ((bottomObject.tag != "Lever") && (bottomObject.tag != "Destructible")))
                             {
                                 setJump(Vector3.back);
+                                jumpSpeed = standartJumpSpeed;
                                 coordinates.y--;
                             }
                             else
@@ -333,10 +340,7 @@ public class PlayerScript : MonoBehaviour
                             delayDuration = 32;
                             landingY += blockSide;
                             ladder = true;
-                        }
-                        else
-                        {
-                            Debug.Log(raycastBoxTopScript.getObject(Vector3.back).name);
+                            jumpSpeed = standartJumpSpeed + 0.03f;
                         }
                         startTime = Time.time;
                     }
@@ -348,7 +352,7 @@ public class PlayerScript : MonoBehaviour
                 if (!ladder)
                 {
                     newPosition = new Vector3(coordinates.x * (-blockSide), transform.position.y, coordinates.y * (blockSide));
-                    Debug.Log(coordinates);
+                    Debug.Log(landingY);
                 }
                 else newPosition = new Vector3(transform.position.x, ladderUp, transform.position.z);
             }
@@ -409,70 +413,6 @@ public class PlayerScript : MonoBehaviour
                 }
             }
         }
-            //else
-            //{
-            //    anim.Play("ClimbingTheLadder");
-            //    newPosition = new Vector3(ladderScript.playerX * (-blockSide), transform.position.y + blockSide, ladderScript.playerZ * (blockSide));
-            //    delayDuration = 60;
-            //    if (ladderDirection == 'w')
-            //    {
-            //        rot = 0;
-            //        raycastBoxTopScript.changeDelta(-0.4f, raycastBoxTopScript.getOriginalDeltaY(), 0);
-            //        raycastBoxBottomScript.changeDelta(-0.4f, raycastBoxTopScript.getOriginalDeltaY(), 0);
-            //        if (!raycastBoxTopScript.obstacle(Vector3.left))
-            //        {
-            //            setJump(Vector3.left);
-            //            coordinates.x++;
-            //            landingY += 0.4f;
-            //            ladder = false;
-            //            newPosition = new Vector3(coordinates.x * (-blockSide), transform.position.y, coordinates.y * (blockSide));
-            //        }
-            //    }
-            //    else if(ladderDirection == 's')
-            //    {
-            //        rot = 180;
-            //        raycastBoxTopScript.changeDelta(0.4f, raycastBoxTopScript.getOriginalDeltaY(), 0);
-            //        raycastBoxBottomScript.changeDelta(0.4f, raycastBoxTopScript.getOriginalDeltaY(), 0);
-            //        if (!raycastBoxTopScript.obstacle(Vector3.right))
-            //        {
-            //            setJump(Vector3.right);
-            //            coordinates.x--;
-            //            landingY += 0.4f;
-            //            ladder = false;
-            //            newPosition = new Vector3(coordinates.x * (-blockSide), transform.position.y, coordinates.y * (blockSide));
-            //        }
-            //    }
-            //    else if(ladderDirection == 'd')
-            //    {
-            //        rot = 90;
-            //        raycastBoxTopScript.changeDelta(0, raycastBoxTopScript.getOriginalDeltaY(), -0.4f);
-            //        raycastBoxBottomScript.changeDelta(0, raycastBoxTopScript.getOriginalDeltaY(), -0.4f);
-            //        if (!raycastBoxTopScript.obstacle(Vector3.forward))
-            //        {
-            //            Debug.Log("LADDER");
-            //            setJump(Vector3.forward);
-            //            coordinates.y++;
-            //            landingY += 0.4f;
-            //            ladder = false;
-            //            newPosition = new Vector3(coordinates.x * (-blockSide), transform.position.y, coordinates.y * (blockSide));
-            //        }
-            //    }
-            //    else if (ladderDirection == 'a')
-            //    {
-            //        rot = -90;
-            //        raycastBoxTopScript.changeDelta(0, raycastBoxTopScript.getOriginalDeltaY(), 0.4f);
-            //        raycastBoxBottomScript.changeDelta(0, raycastBoxTopScript.getOriginalDeltaY(), 0.4f);
-            //        if (!raycastBoxTopScript.obstacle(Vector3.back))
-            //        {
-            //            setJump(Vector3.back);
-            //            coordinates.y--;
-            //            landingY += 0.4f;
-            //            ladder = false;
-            //            newPosition = new Vector3(coordinates.x * (-blockSide), transform.position.y, coordinates.y * (blockSide));
-            //        }
-            //    }
-            //    startTime = Time.time;
-            //}
     }
 
     private void setBoxFree()
@@ -511,4 +451,15 @@ public class PlayerScript : MonoBehaviour
     {
         Time.timeScale = 0f;
     }
+
+    public void setCoordinates(Vector2 coord)
+    {
+        coordinates = coord;
+    }
+
+    public bool getDead()
+    {
+        return dead;
+    }
+    
 }

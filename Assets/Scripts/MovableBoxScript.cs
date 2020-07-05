@@ -28,7 +28,11 @@ public class MovableBoxScript : MonoBehaviour
             if(transform.position.y - landingY < 0.1f)
             {
                 RaycastHit hit;
-                if ((!landing) && ((Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 0.4f)) || Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 0.4f, layerIgnore))) landing = true;
+                if ((!landing) && ((Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 0.4f)) || Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 0.4f, layerIgnore)))
+                {
+                    Debug.Log(hit.transform.name);
+                    landing = true;
+                }
                 if (transform.position.y - landingY < 0.05f)
                 {
                     if (landing)
@@ -42,7 +46,7 @@ public class MovableBoxScript : MonoBehaviour
             else
                 {
                 ySpeed -= g;
-                if (transform.position.y < -2f)
+                if (transform.position.y < -100f)
                 {
                     falling = false;
                 }
