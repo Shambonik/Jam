@@ -1,11 +1,17 @@
 fileFormatVersion: 2
-guid: 3dc163471c23a8d40b5b8da5617ffdd4
+guid: 70d79ab1d08565b47b95c09bc5d929e4
 ModelImporter:
   serializedVersion: 25
   internalIDToNameTable:
   - first:
       74: 1825870284180692390
     second: Armature|AttackAnimation
+  - first:
+      74: -3232671470081153216
+    second: Armature|ClimbingTheLadder
+  - first:
+      74: -6095442028356844054
+    second: Armature|ClimbOnLadder
   - first:
       74: 4093082427297496644
     second: Armature|CrateIdleAnimation
@@ -16,6 +22,9 @@ ModelImporter:
       74: 5565599561721252677
     second: Armature|CratePickUpAnimation
   - first:
+      74: 8716811942202833416
+    second: Armature|FinishClimbingLadder1
+  - first:
       74: 6006466565399970114
     second: Armature|GetHitAnimation
   - first:
@@ -25,8 +34,8 @@ ModelImporter:
       74: -8015573827971123036
     second: Armature|JumpAnimation
   - first:
-      74: -1326058760423964386
-    second: Armature|LeverAction
+      74: -6568281338405832291
+    second: Armature|LadderIdle
   - first:
       74: -6977957659668906942
     second: Armature|TurnLever
@@ -62,8 +71,66 @@ ModelImporter:
       name: Armature|AttackAnimation
       takeName: Armature|AttackAnimation
       internalID: 1825870284180692390
-      firstFrame: 35
+      firstFrame: 30
       lastFrame: 91
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|ClimbingTheLadder
+      takeName: Armature|ClimbingTheLadder
+      internalID: -3232671470081153216
+      firstFrame: 0
+      lastFrame: 70
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|ClimbOnLadder
+      takeName: Armature|ClimbOnLadder
+      internalID: -6095442028356844054
+      firstFrame: 0
+      lastFrame: 60
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -175,6 +242,35 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
+      name: Armature|FinishClimbingLadder1
+      takeName: Armature|FinishClimbingLadder1
+      internalID: 8716811942202833416
+      firstFrame: 0
+      lastFrame: 60
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
       name: Armature|GetHitAnimation
       takeName: Armature|GetHitAnimation
       internalID: 6006466565399970114
@@ -262,11 +358,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Armature|LeverAction
-      takeName: Armature|LeverAction
-      internalID: -1326058760423964386
+      name: Armature|LadderIdle
+      takeName: Armature|LadderIdle
+      internalID: -6568281338405832291
       firstFrame: 0
-      lastFrame: 60
+      lastFrame: 1
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

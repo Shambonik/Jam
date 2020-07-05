@@ -50,6 +50,11 @@ public class RaycastBoxScript : MonoBehaviour
         deltaZ = z;
         transform.position = new Vector3(player.transform.position.x - deltaX, player.transform.position.y + deltaY, player.transform.position.z + deltaZ);
     }
+    
+    public float getOriginalDeltaY()
+    {
+        return originalDeltaY;
+    }
 
     public void setOriginalDelta()
     {

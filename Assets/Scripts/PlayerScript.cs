@@ -31,6 +31,9 @@ public class PlayerScript : MonoBehaviour
     private bool boxInHands = false;
     private bool canRotate = false;
     private string ePressed = "";
+    private bool ladder = false;
+    private float ladderUp = 0;
+    private bool onLadder = false;
 
     void Start()
     {
@@ -57,7 +60,17 @@ public class PlayerScript : MonoBehaviour
     void Update()
     {
         transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(transform.eulerAngles.x, rot, transform.eulerAngles.z), 800 * Time.deltaTime);
-        if (((Mathf.Abs(transform.rotation.eulerAngles.y - rot) < 0.02f) || (Mathf.Abs(transform.rotation.eulerAngles.y - rot - 360) < 0.02f))&&(box != null) && (box.tag == "Box"))
+        if (ladder)
+        {
+            transform.position = Vector3.Lerp(transform.position, newPosition, 4f * Time.deltaTime);
+            if (transform.position.y - newPosition.y > -0.01f)
+            {
+                ladder = false;
+                ladderUp = 0;
+                //anim.Play("IdleLadder");
+            }
+        }
+        if (((Mathf.Abs(transform.rotation.eulerAngles.y - rot) < 0.02f) || (Mathf.Abs(transform.rotation.eulerAngles.y - rot - 360) < 0.02f)) && (box != null) && (box.tag == "Box"))
         {
             if (!boxInHands)
             {
@@ -67,7 +80,7 @@ public class PlayerScript : MonoBehaviour
                 boxInHands = true;
                 startTime = Time.time;
             }
-            if((Time.time - startTime) > boxDelayDuration * Time.deltaTime) box.transform.localPosition = Vector3.Lerp(box.transform.localPosition, new Vector3(-0.3f, 0.4f, 0), 0.1f);
+            if ((Time.time - startTime) > boxDelayDuration * Time.deltaTime) box.transform.localPosition = Vector3.Lerp(box.transform.localPosition, new Vector3(-0.3f, 0.4f, 0), 0.1f);
         }
         if (jumping)
         {
@@ -111,7 +124,6 @@ public class PlayerScript : MonoBehaviour
         if ((ySpeed == 0) && (Time.time - startTime > delayDuration * Time.deltaTime))
         {
             cameraScript.setMaterial();
-
             if (!boxInHands)
             {
                 if (Input.GetKey("w")) rot = 0;
@@ -161,7 +173,7 @@ public class PlayerScript : MonoBehaviour
                         else if (!raycastBoxTopScript.obstacle(Vector3.left))
                         {
                             GameObject bottomObject = raycastBoxBottomScript.getObject(Vector3.left);
-                            if ((bottomObject == null) || ((bottomObject.tag != "Lever")&&(bottomObject.tag != "Destructible")))
+                            if ((bottomObject == null) || ((bottomObject.tag != "Lever") && (bottomObject.tag != "Destructible")))
                             {
                                 setJump(Vector3.left);
                                 coordinates.x++;
@@ -179,8 +191,17 @@ public class PlayerScript : MonoBehaviour
                                     delayDuration = 32;
                                 }
                             }
-                            startTime = Time.time;
+                            ladder = false;
                         }
+                        else if ((raycastBoxTopScript.getObject(Vector3.left).tag == "Ladder") && (!boxInHands)&& (raycastBoxTopScript.getObject(Vector3.left).GetComponent<LadderScript>().direction == 'w'))
+                        {
+                            ladderUp = transform.position.y + 0.4f;
+                            anim.Play("ClimbingTheLadder");
+                            delayDuration = 32;
+                            landingY += blockSide;
+                            ladder = true;
+                        }
+                        startTime = Time.time;
                     }
                 }
                 else if (Input.GetKey("s"))
@@ -214,8 +235,17 @@ public class PlayerScript : MonoBehaviour
                                     delayDuration = 32;
                                 }
                             }
-                            startTime = Time.time;
+                            ladder = false;
                         }
+                        else if ((raycastBoxTopScript.getObject(Vector3.right).tag == "Ladder") && (!boxInHands) && (raycastBoxTopScript.getObject(Vector3.right).GetComponent<LadderScript>().direction == 's'))
+                        {
+                            ladderUp = transform.position.y + 0.4f;
+                            anim.Play("ClimbingTheLadder");
+                            delayDuration = 32;
+                            landingY += blockSide;
+                            ladder = true;
+                        }
+                        startTime = Time.time;
                     }
                 }
                 else if (Input.GetKey("d"))
@@ -249,8 +279,17 @@ public class PlayerScript : MonoBehaviour
                                     delayDuration = 32;
                                 }
                             }
-                            startTime = Time.time;
+                            ladder = false;
                         }
+                        else if ((raycastBoxTopScript.getObject(Vector3.forward).tag == "Ladder") && (!boxInHands) && (raycastBoxTopScript.getObject(Vector3.forward).GetComponent<LadderScript>().direction == 'd'))
+                        {
+                            ladderUp = transform.position.y + 0.4f;
+                            anim.Play("ClimbingTheLadder");
+                            delayDuration = 32;
+                            landingY += blockSide;
+                            ladder = true;
+                        }
+                        startTime = Time.time;
                     }
                 }
                 else if (Input.GetKey("a"))
@@ -284,22 +323,39 @@ public class PlayerScript : MonoBehaviour
                                     delayDuration = 32;
                                 }
                             }
-                            startTime = Time.time;
+                            ladder = false;
                         }
+                        else if ((raycastBoxTopScript.getObject(Vector3.back).tag == "Ladder") && (!boxInHands) && (raycastBoxTopScript.getObject(Vector3.back).GetComponent<LadderScript>().direction == 'a'))
+                        {
+                            ladderUp = transform.position.y + 0.4f;
+                            anim.Play("ClimbingTheLadder");
+                            delayDuration = 32;
+                            landingY += blockSide;
+                            ladder = true;
+                        }
+                        else
+                        {
+                            Debug.Log(raycastBoxTopScript.getObject(Vector3.back).name);
+                        }
+                        startTime = Time.time;
                     }
                 }
                 else
                 {
                     anim.SetBool("isJumping", false);
                 }
-
-                newPosition = new Vector3(coordinates.x * (-blockSide), transform.position.y, coordinates.y * (blockSide));
+                if (!ladder)
+                {
+                    newPosition = new Vector3(coordinates.x * (-blockSide), transform.position.y, coordinates.y * (blockSide));
+                    Debug.Log(coordinates);
+                }
+                else newPosition = new Vector3(transform.position.x, ladderUp, transform.position.z);
             }
             else
             {
                 if (!boxInHands)
                 {
-                    if (Input.GetKey("w") && ePressed!="w")
+                    if (Input.GetKey("w") && ePressed != "w")
                     {
                         box = raycastBoxBottomScript.getObject(Vector3.left);
                         ePressed = "w";
@@ -352,6 +408,70 @@ public class PlayerScript : MonoBehaviour
                 }
             }
         }
+            //else
+            //{
+            //    anim.Play("ClimbingTheLadder");
+            //    newPosition = new Vector3(ladderScript.playerX * (-blockSide), transform.position.y + blockSide, ladderScript.playerZ * (blockSide));
+            //    delayDuration = 60;
+            //    if (ladderDirection == 'w')
+            //    {
+            //        rot = 0;
+            //        raycastBoxTopScript.changeDelta(-0.4f, raycastBoxTopScript.getOriginalDeltaY(), 0);
+            //        raycastBoxBottomScript.changeDelta(-0.4f, raycastBoxTopScript.getOriginalDeltaY(), 0);
+            //        if (!raycastBoxTopScript.obstacle(Vector3.left))
+            //        {
+            //            setJump(Vector3.left);
+            //            coordinates.x++;
+            //            landingY += 0.4f;
+            //            ladder = false;
+            //            newPosition = new Vector3(coordinates.x * (-blockSide), transform.position.y, coordinates.y * (blockSide));
+            //        }
+            //    }
+            //    else if(ladderDirection == 's')
+            //    {
+            //        rot = 180;
+            //        raycastBoxTopScript.changeDelta(0.4f, raycastBoxTopScript.getOriginalDeltaY(), 0);
+            //        raycastBoxBottomScript.changeDelta(0.4f, raycastBoxTopScript.getOriginalDeltaY(), 0);
+            //        if (!raycastBoxTopScript.obstacle(Vector3.right))
+            //        {
+            //            setJump(Vector3.right);
+            //            coordinates.x--;
+            //            landingY += 0.4f;
+            //            ladder = false;
+            //            newPosition = new Vector3(coordinates.x * (-blockSide), transform.position.y, coordinates.y * (blockSide));
+            //        }
+            //    }
+            //    else if(ladderDirection == 'd')
+            //    {
+            //        rot = 90;
+            //        raycastBoxTopScript.changeDelta(0, raycastBoxTopScript.getOriginalDeltaY(), -0.4f);
+            //        raycastBoxBottomScript.changeDelta(0, raycastBoxTopScript.getOriginalDeltaY(), -0.4f);
+            //        if (!raycastBoxTopScript.obstacle(Vector3.forward))
+            //        {
+            //            Debug.Log("LADDER");
+            //            setJump(Vector3.forward);
+            //            coordinates.y++;
+            //            landingY += 0.4f;
+            //            ladder = false;
+            //            newPosition = new Vector3(coordinates.x * (-blockSide), transform.position.y, coordinates.y * (blockSide));
+            //        }
+            //    }
+            //    else if (ladderDirection == 'a')
+            //    {
+            //        rot = -90;
+            //        raycastBoxTopScript.changeDelta(0, raycastBoxTopScript.getOriginalDeltaY(), 0.4f);
+            //        raycastBoxBottomScript.changeDelta(0, raycastBoxTopScript.getOriginalDeltaY(), 0.4f);
+            //        if (!raycastBoxTopScript.obstacle(Vector3.back))
+            //        {
+            //            setJump(Vector3.back);
+            //            coordinates.y--;
+            //            landingY += 0.4f;
+            //            ladder = false;
+            //            newPosition = new Vector3(coordinates.x * (-blockSide), transform.position.y, coordinates.y * (blockSide));
+            //        }
+            //    }
+            //    startTime = Time.time;
+            //}
     }
 
     private void setBoxFree()
