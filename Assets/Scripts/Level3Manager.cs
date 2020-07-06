@@ -14,15 +14,18 @@ public class Level3Manager : MonoBehaviour
     private AudioSource bridgeSound;
     public GameObject endPanel;
     private GameObject player;
+    private int phase = 0;
 
     void Start()
     {
         //newRotation = bridge.transform.localRotation.z;
-        newRotation = 0;
+
+        newRotation = -90;
         levelChangePanel = GameObject.FindGameObjectWithTag("LevelChangePanel");
         levelChangePanel.GetComponent<Animator>().Play("LevelChangeEnd");
         bridgeSound = GetComponent<AudioSource>();
         player = GameObject.FindGameObjectWithTag("Player");
+        player.GetComponent<PlayerScript>().setCoordinates(new Vector2(0, 11));
     }
 
     // Update is called once per frame
@@ -30,31 +33,39 @@ public class Level3Manager : MonoBehaviour
     {
         if (solved)
         {
+            bridge.transform.localRotation = Quaternion.Lerp(bridge.transform.localRotation, Quaternion.AngleAxis(newRotation, Vector3.right), 1*Time.deltaTime);
             if (!bridgeSound.isPlaying)
             {
                 bridgeSound.volume = FindObjectOfType<VolumeScript>().GetVolume();
                 bridgeSound.Play();
             }
-            bridge.transform.localRotation = Quaternion.Lerp(bridge.transform.localRotation, Quaternion.AngleAxis(newRotation, Vector3.right), 0.05f);
         }
-        if (!mistake && levers[0].getActivated())
+
+        if (phase == 0)
         {
-            if (!mistake && levers[2].getActivated())
-            {
-                if (!mistake && levers[1].getActivated())
-                {
-                    if (!mistake && levers[3].getActivated())
-                    {
-                        newRotation = -90f;
-                        solved = true;
-                    }
-                    else LeversDeactivation();
-                }
-                else LeversDeactivation();
-            }
-            else LeversDeactivation();
+            if (levers[1].getActivated() || levers[2].getActivated() || levers[3].getActivated()) LeversDeactivation();
+            else if (levers[0].getActivated()) phase++;
         }
-        else LeversDeactivation();
+        else if(phase == 1)
+        {
+            if (levers[1].getActivated() || !levers[0].getActivated() || levers[3].getActivated()) LeversDeactivation();
+            else if (levers[2].getActivated()) phase++;
+        }
+        else if (phase == 2)
+        {
+            if (!levers[2].getActivated() || !levers[0].getActivated() || levers[3].getActivated()) LeversDeactivation();
+            else if (levers[1].getActivated()) phase++;
+        }
+        else if (phase == 3)
+        {
+            if (!levers[2].getActivated() || !levers[0].getActivated() || !levers[1].getActivated()) LeversDeactivation();
+            else if (levers[3].getActivated())
+            {
+                solved = true;
+            }
+        }
+
+
         if (player.transform.position.x<=-11.1)
         {
             endPanel.SetActive(true);
@@ -65,6 +76,8 @@ public class Level3Manager : MonoBehaviour
 
     void LeversDeactivation()
     {
+        phase = 0;
+        Debug.Log("MICTAKE");
         mistake = true;
         foreach (LeverScript lvr in levers)
         {

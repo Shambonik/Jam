@@ -97,7 +97,7 @@ LightmapSettings:
     m_ShowResolutionOverlay: 1
     m_ExportTrainingData: 0
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -596,6 +596,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9207305261584629355, guid: e88e25437b322f940b14394f37d97070,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -4.16
+      objectReference: {fileID: 0}
+    - target: {fileID: 3463006138860212997, guid: e88e25437b322f940b14394f37d97070,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -4.16
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e88e25437b322f940b14394f37d97070, type: 3}
 --- !u!1 &236595552 stripped
@@ -767,8 +777,25 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6472786968208415818, guid: fdcf91fcfb6f36c43a7fb68dbed1fe2e,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fdcf91fcfb6f36c43a7fb68dbed1fe2e, type: 3}
+--- !u!114 &342634860 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1342935322, guid: 0274486da3b6f6943a8640d82d8e0601,
+    type: 3}
+  m_PrefabInstance: {fileID: 212166047}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 698e6e171b024be488c615fc5766d436, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &369423579
 GameObject:
   m_ObjectHideFlags: 0
@@ -1623,9 +1650,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levers:
   - {fileID: 1342935322}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1785020949}
+  - {fileID: 1498036389}
+  - {fileID: 342634860}
   bridge: {fileID: 236595554}
   endPanel: {fileID: 1985182501}
 --- !u!4 &1027153036
@@ -2478,6 +2505,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!114 &1498036389 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1342935322, guid: 0274486da3b6f6943a8640d82d8e0601,
+    type: 3}
+  m_PrefabInstance: {fileID: 230734261}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 698e6e171b024be488c615fc5766d436, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1594515817
 GameObject:
   m_ObjectHideFlags: 0
@@ -2682,6 +2721,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 705679166}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1785020949 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1342935322, guid: 0274486da3b6f6943a8640d82d8e0601,
+    type: 3}
+  m_PrefabInstance: {fileID: 1297634741}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 698e6e171b024be488c615fc5766d436, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1824640318
 GameObject:
   m_ObjectHideFlags: 0
@@ -3163,6 +3214,7 @@ GameObject:
   - component: {fileID: 2068237450}
   - component: {fileID: 2068237449}
   - component: {fileID: 2068237448}
+  - component: {fileID: 2068237447}
   m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
@@ -3170,6 +3222,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!65 &2068237447
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2068237446}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.9987638, y: 11.255435, z: 9.482978}
+  m_Center: {x: 3.8925054, y: -3.5654979, z: -1.9761419}
 --- !u!23 &2068237448
 MeshRenderer:
   m_ObjectHideFlags: 0

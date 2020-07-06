@@ -460,6 +460,13 @@ public class PlayerScript : MonoBehaviour
     public void setCoordinates(Vector2 coord)
     {
         coordinates = coord;
+        transform.position = new Vector3(coordinates.x * (-blockSide), transform.position.y, coordinates.y * (blockSide));
+    }
+
+    public void setCoordinates(Vector2 coord, int height)
+    {
+        coordinates = coord;
+        transform.position = new Vector3(coordinates.x * (-blockSide), transform.position.y + height*blockSide, coordinates.y * (blockSide));
     }
 
     public bool getDead()
@@ -469,8 +476,12 @@ public class PlayerScript : MonoBehaviour
 
     public void PlayLeverSound()
     {
-        leverSound.volume = FindObjectOfType<VolumeScript>().GetVolume();
-        leverSound.Play();
+        try
+        {
+            leverSound.volume = FindObjectOfType<VolumeScript>().GetVolume();
+            leverSound.Play();
+        }
+        catch (System.Exception e) { }
     }
     
 }
