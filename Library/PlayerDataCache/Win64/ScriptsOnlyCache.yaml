@@ -2,10 +2,17 @@ ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
     - CameraScript
+    - DestructibleScript
+    - LadderScript
+    - Level1Manager
+    - Level2Script
+    - Level3Manager
+    - LeverScript
     - MainMenuScript
     - MovableBoxScript
     - PlayerScript
     - RaycastBoxScript
+    - VolumeScript
     Unity.RenderPipelines.Lightweight.Runtime.dll:
     - UnityEngine.Rendering.LWRP.ForwardRendererData
     - UnityEngine.Rendering.LWRP.LWRPAdditionalCameraData
@@ -31,7 +38,7 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.Image
     - UnityEngine.UI.Text
   sceneClasses:
-    Assets/Scenes/LevelWithTowers.unity:
+    Assets/Scenes/Level1.unity:
     - Class: 1
       Script: {instanceID: 0}
     - Class: 4
@@ -58,7 +65,9 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 81
       Script: {instanceID: 0}
-    - Class: 89
+    - Class: 82
+      Script: {instanceID: 0}
+    - Class: 83
       Script: {instanceID: 0}
     - Class: 90
       Script: {instanceID: 0}
@@ -71,29 +80,229 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 9596}
+      Script: {instanceID: 9372}
     - Class: 114
-      Script: {instanceID: 9602}
+      Script: {instanceID: 9598}
     - Class: 114
-      Script: {instanceID: 9608}
+      Script: {instanceID: 9600}
     - Class: 114
-      Script: {instanceID: 9616}
+      Script: {instanceID: 9606}
     - Class: 114
-      Script: {instanceID: 9652}
+      Script: {instanceID: 9612}
     - Class: 114
-      Script: {instanceID: 9654}
+      Script: {instanceID: 9620}
     - Class: 114
-      Script: {instanceID: 10096}
+      Script: {instanceID: 9656}
+    - Class: 114
+      Script: {instanceID: 9658}
     - Class: 114
       Script: {instanceID: 10100}
     - Class: 114
-      Script: {instanceID: 10144}
+      Script: {instanceID: 10104}
     - Class: 114
-      Script: {instanceID: 10660}
+      Script: {instanceID: 10148}
     - Class: 114
-      Script: {instanceID: 10810}
+      Script: {instanceID: 10668}
     - Class: 114
-      Script: {instanceID: 10898}
+      Script: {instanceID: 10674}
+    - Class: 114
+      Script: {instanceID: 10908}
+    - Class: 114
+      Script: {instanceID: 11410}
+    - Class: 114
+      Script: {instanceID: 43984}
+    - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
+      Script: {instanceID: 0}
+    - Class: 134
+      Script: {instanceID: 0}
+    - Class: 137
+      Script: {instanceID: 0}
+    - Class: 157
+      Script: {instanceID: 0}
+    - Class: 213
+      Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
+    - Class: 224
+      Script: {instanceID: 0}
+    Assets/Scenes/LevelCastle.unity:
+    - Class: 1
+      Script: {instanceID: 0}
+    - Class: 4
+      Script: {instanceID: 0}
+    - Class: 20
+      Script: {instanceID: 0}
+    - Class: 21
+      Script: {instanceID: 0}
+    - Class: 23
+      Script: {instanceID: 0}
+    - Class: 28
+      Script: {instanceID: 0}
+    - Class: 33
+      Script: {instanceID: 0}
+    - Class: 43
+      Script: {instanceID: 0}
+    - Class: 48
+      Script: {instanceID: 0}
+    - Class: 54
+      Script: {instanceID: 0}
+    - Class: 65
+      Script: {instanceID: 0}
+    - Class: 74
+      Script: {instanceID: 0}
+    - Class: 81
+      Script: {instanceID: 0}
+    - Class: 82
+      Script: {instanceID: 0}
+    - Class: 83
+      Script: {instanceID: 0}
+    - Class: 90
+      Script: {instanceID: 0}
+    - Class: 91
+      Script: {instanceID: 0}
+    - Class: 95
+      Script: {instanceID: 0}
+    - Class: 104
+      Script: {instanceID: 0}
+    - Class: 108
+      Script: {instanceID: 0}
+    - Class: 114
+      Script: {instanceID: 9304}
+    - Class: 114
+      Script: {instanceID: 9372}
+    - Class: 114
+      Script: {instanceID: 9598}
+    - Class: 114
+      Script: {instanceID: 9600}
+    - Class: 114
+      Script: {instanceID: 9606}
+    - Class: 114
+      Script: {instanceID: 9612}
+    - Class: 114
+      Script: {instanceID: 9620}
+    - Class: 114
+      Script: {instanceID: 9656}
+    - Class: 114
+      Script: {instanceID: 9658}
+    - Class: 114
+      Script: {instanceID: 10100}
+    - Class: 114
+      Script: {instanceID: 10104}
+    - Class: 114
+      Script: {instanceID: 10148}
+    - Class: 114
+      Script: {instanceID: 10550}
+    - Class: 114
+      Script: {instanceID: 10598}
+    - Class: 114
+      Script: {instanceID: 10668}
+    - Class: 114
+      Script: {instanceID: 10908}
+    - Class: 114
+      Script: {instanceID: 11410}
+    - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
+      Script: {instanceID: 0}
+    - Class: 134
+      Script: {instanceID: 0}
+    - Class: 137
+      Script: {instanceID: 0}
+    - Class: 157
+      Script: {instanceID: 0}
+    - Class: 212
+      Script: {instanceID: 0}
+    - Class: 213
+      Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
+    - Class: 224
+      Script: {instanceID: 0}
+    Assets/Scenes/LevelWithTowers.unity:
+    - Class: 1
+      Script: {instanceID: 0}
+    - Class: 4
+      Script: {instanceID: 0}
+    - Class: 20
+      Script: {instanceID: 0}
+    - Class: 21
+      Script: {instanceID: 0}
+    - Class: 23
+      Script: {instanceID: 0}
+    - Class: 28
+      Script: {instanceID: 0}
+    - Class: 33
+      Script: {instanceID: 0}
+    - Class: 43
+      Script: {instanceID: 0}
+    - Class: 48
+      Script: {instanceID: 0}
+    - Class: 54
+      Script: {instanceID: 0}
+    - Class: 64
+      Script: {instanceID: 0}
+    - Class: 65
+      Script: {instanceID: 0}
+    - Class: 74
+      Script: {instanceID: 0}
+    - Class: 81
+      Script: {instanceID: 0}
+    - Class: 82
+      Script: {instanceID: 0}
+    - Class: 83
+      Script: {instanceID: 0}
+    - Class: 90
+      Script: {instanceID: 0}
+    - Class: 91
+      Script: {instanceID: 0}
+    - Class: 95
+      Script: {instanceID: 0}
+    - Class: 104
+      Script: {instanceID: 0}
+    - Class: 108
+      Script: {instanceID: 0}
+    - Class: 114
+      Script: {instanceID: 9304}
+    - Class: 114
+      Script: {instanceID: 9372}
+    - Class: 114
+      Script: {instanceID: 9598}
+    - Class: 114
+      Script: {instanceID: 9600}
+    - Class: 114
+      Script: {instanceID: 9606}
+    - Class: 114
+      Script: {instanceID: 9612}
+    - Class: 114
+      Script: {instanceID: 9620}
+    - Class: 114
+      Script: {instanceID: 9656}
+    - Class: 114
+      Script: {instanceID: 9658}
+    - Class: 114
+      Script: {instanceID: 10100}
+    - Class: 114
+      Script: {instanceID: 10104}
+    - Class: 114
+      Script: {instanceID: 10148}
+    - Class: 114
+      Script: {instanceID: 10550}
+    - Class: 114
+      Script: {instanceID: 10668}
+    - Class: 114
+      Script: {instanceID: 10820}
+    - Class: 114
+      Script: {instanceID: 10908}
+    - Class: 114
+      Script: {instanceID: 11410}
+    - Class: 114
+      Script: {instanceID: 11420}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -114,71 +323,6 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 224
       Script: {instanceID: 0}
-    - Class: 258
-      Script: {instanceID: 0}
-    Assets/Scenes/MainMenu.unity:
-    - Class: 1
-      Script: {instanceID: 0}
-    - Class: 4
-      Script: {instanceID: 0}
-    - Class: 20
-      Script: {instanceID: 0}
-    - Class: 21
-      Script: {instanceID: 0}
-    - Class: 23
-      Script: {instanceID: 0}
-    - Class: 28
-      Script: {instanceID: 0}
-    - Class: 33
-      Script: {instanceID: 0}
-    - Class: 43
-      Script: {instanceID: 0}
-    - Class: 48
-      Script: {instanceID: 0}
-    - Class: 64
-      Script: {instanceID: 0}
-    - Class: 74
-      Script: {instanceID: 0}
-    - Class: 81
-      Script: {instanceID: 0}
-    - Class: 90
-      Script: {instanceID: 0}
-    - Class: 95
-      Script: {instanceID: 0}
-    - Class: 104
-      Script: {instanceID: 0}
-    - Class: 114
-      Script: {instanceID: 9594}
-    - Class: 114
-      Script: {instanceID: 9596}
-    - Class: 114
-      Script: {instanceID: 9602}
-    - Class: 114
-      Script: {instanceID: 9608}
-    - Class: 114
-      Script: {instanceID: 9616}
-    - Class: 114
-      Script: {instanceID: 9652}
-    - Class: 114
-      Script: {instanceID: 9654}
-    - Class: 114
-      Script: {instanceID: 15400}
-    - Class: 115
-      Script: {instanceID: 0}
-    - Class: 128
-      Script: {instanceID: 0}
-    - Class: 137
-      Script: {instanceID: 0}
-    - Class: 157
-      Script: {instanceID: 0}
-    - Class: 213
-      Script: {instanceID: 0}
-    - Class: 222
-      Script: {instanceID: 0}
-    - Class: 223
-      Script: {instanceID: 0}
-    - Class: 224
-      Script: {instanceID: 0}
   scriptHashData:
   - hash:
       serializedVersion: 2
@@ -186,6 +330,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Postprocessing.Runtime.dll
     namespaceName: UnityEngine.Rendering.PostProcessing
     className: PostProcessLayer
+  - hash:
+      serializedVersion: 2
+      Hash: 220bd265f54cc4cee8f1539ad2b2c64a
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: DestructibleScript
   - hash:
       serializedVersion: 2
       Hash: 726fcf7961cbb4108aa5be5e55b8c8bf
@@ -210,6 +360,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.RenderPipelines.Core.Runtime.dll
     namespaceName: UnityEngine.Rendering
     className: Volume
+  - hash:
+      serializedVersion: 2
+      Hash: f5578ead4088e63bc01389fe160a223e
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: MainMenuScript
   - hash:
       serializedVersion: 2
       Hash: 87ff43d2baf3385cba327d8f803a4ebb
@@ -704,13 +860,13 @@ ScriptsOnlyBuild:
     className: LWRPAdditionalCameraData
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+      Hash: 86f5c4552fb685efa99462b0f479fe76
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: RaycastBoxScript
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+      Hash: c0fd835543f44e240d30d10f60d13b79
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerScript
@@ -777,6 +933,18 @@ ScriptsOnlyBuild:
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: LeverScript
+  - hash:
+      serializedVersion: 2
+      Hash: b35a616babff18b3719fd1521e847103
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Level3Manager
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Unity.Analytics.Editor.dll
     namespaceName: UnityEditor.Analytics
     className: AnalyticsEventTrackerEditor
@@ -798,6 +966,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: CameraScript
+  - hash:
+      serializedVersion: 2
+      Hash: 948d9311b0bc9139919585caebc57176
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Level1Manager
   - hash:
       serializedVersion: 2
       Hash: a53651ee3996fbba20dfe0fce02f0b23
@@ -932,6 +1106,18 @@ ScriptsOnlyBuild:
     className: AudioTrack
   - hash:
       serializedVersion: 2
+      Hash: 712a03dfcb627c72683076431ed90cde
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: LadderScript
+  - hash:
+      serializedVersion: 2
+      Hash: c7674007c19f48dcebf99048f5c6df3a
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Level2Script
+  - hash:
+      serializedVersion: 2
       Hash: c3d3430df9e3ea95e3e3d587961390fb
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
@@ -992,12 +1178,13 @@ ScriptsOnlyBuild:
     className: PlayableTrack
   - hash:
       serializedVersion: 2
-      Hash: e59390533fa9548a15369dfd4f65ec4f
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
-    className: MainMenuScript
+    className: VolumeScript
   platform: 19
   scenePathNames:
-  - Assets/Scenes/MainMenu.unity
+  - Assets/Scenes/Level1.unity
   - Assets/Scenes/LevelWithTowers.unity
-  playerPath: C:/Users/ereme/Documents/Lovejam/Jam/Build/Jam.exe
+  - Assets/Scenes/LevelCastle.unity
+  playerPath: C:/Users/ereme/Documents/Lovejam/Jam/Build/Cutie's Adventure.exe

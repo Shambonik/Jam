@@ -28,6 +28,9 @@ public class PlayerScript : MonoBehaviour
     private GameObject panelDeath;
     private GameObject textDeath;
     private GameObject box = null;
+    public AudioSource jumpSound;
+    public AudioSource boxShatterSound;
+    public AudioSource leverSound;
     private bool boxInHands = false;
     private bool canRotate = false;
     private string ePressed = "";
@@ -113,6 +116,8 @@ public class PlayerScript : MonoBehaviour
                     {
                         if (landing)
                         {
+                            jumpSound.volume = 0.6f * FindObjectOfType<VolumeScript>().GetVolume();
+                            jumpSound.Play();
                             transform.position = new Vector3(newPosition.x, landingY, newPosition.z);
                             ySpeed = 0;
                             jumping = false;
@@ -460,6 +465,12 @@ public class PlayerScript : MonoBehaviour
     public bool getDead()
     {
         return dead;
+    }
+
+    public void PlayLeverSound()
+    {
+        leverSound.volume = FindObjectOfType<VolumeScript>().GetVolume();
+        leverSound.Play();
     }
     
 }

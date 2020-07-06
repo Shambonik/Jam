@@ -18,6 +18,8 @@ public class Level1Manager : MonoBehaviour
         levelChangePanel = GameObject.FindGameObjectWithTag("LevelChangePanel");
         //tutorial1.localScale = new Vector2(Screen.width / 4, Screen.height / 5);
         tutorial1.position = new Vector3(Screen.width/5, Screen.height * 4 / 7);
+        tutorial1.sizeDelta = new Vector2(Screen.width / 3, Screen.height  / 3);
+        tutorial1.gameObject.GetComponentInChildren<Text>().rectTransform.sizeDelta = new Vector2(Screen.width / 3, Screen.height / 2);
         tutorial1.gameObject.GetComponentInChildren<Text>().fontSize = Screen.height / 20;
     }
 
@@ -36,7 +38,7 @@ public class Level1Manager : MonoBehaviour
             levelChangePanel.GetComponent<Animator>().Play("LevelChange");
             if(!changeStarted) startTime = Time.time;
             changeStarted = true;
-            if (Time.time - startTime > 60*Time.deltaTime) SceneManager.LoadScene(2);
+            if (Time.time - startTime > 60*Time.deltaTime) SceneManager.LoadScene(1);
         }
     }
 }

@@ -30,6 +30,8 @@ public class DestructibleScript : MonoBehaviour
 
     public void destroy()
     {
+        player.GetComponent<PlayerScript>().boxShatterSound.volume = FindObjectOfType<VolumeScript>().GetVolume();
+        player.GetComponent<PlayerScript>().boxShatterSound.Play();
         isAttacked = true;
         player.GetComponent<Animator>().Play("Attack");
         startTime = Time.time;

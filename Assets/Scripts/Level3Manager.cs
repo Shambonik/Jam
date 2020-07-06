@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Level3Manager : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class Level3Manager : MonoBehaviour
     public GameObject bridge;
     private bool solved = false;
     private GameObject levelChangePanel;
+    private AudioSource bridgeSound;
+    public GameObject endPanel;
+    private GameObject player;
 
     void Start()
     {
@@ -17,6 +21,8 @@ public class Level3Manager : MonoBehaviour
         newRotation = 0;
         levelChangePanel = GameObject.FindGameObjectWithTag("LevelChangePanel");
         levelChangePanel.GetComponent<Animator>().Play("LevelChangeEnd");
+        bridgeSound = GetComponent<AudioSource>();
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     // Update is called once per frame
@@ -24,6 +30,11 @@ public class Level3Manager : MonoBehaviour
     {
         if (solved)
         {
+            if (!bridgeSound.isPlaying)
+            {
+                bridgeSound.volume = FindObjectOfType<VolumeScript>().GetVolume();
+                bridgeSound.Play();
+            }
             bridge.transform.localRotation = Quaternion.Lerp(bridge.transform.localRotation, Quaternion.AngleAxis(newRotation, Vector3.right), 0.05f);
         }
         if (!mistake && levers[0].getActivated())
@@ -44,7 +55,11 @@ public class Level3Manager : MonoBehaviour
             else LeversDeactivation();
         }
         else LeversDeactivation();
-
+        if (player.transform.position.x<=-11.1)
+        {
+            endPanel.SetActive(true);
+            StartCoroutine("EndGame");
+        }
         mistake = false;
     }
 
@@ -56,4 +71,11 @@ public class Level3Manager : MonoBehaviour
             lvr.setActivated(false);
         }
     }
+
+    IEnumerator EndGame()
+    {
+        yield return new WaitForSeconds(5f);
+        Application.Quit();
+    }
 }
+

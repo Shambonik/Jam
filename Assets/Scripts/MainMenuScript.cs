@@ -16,16 +16,11 @@ public class MainMenuScript : MonoBehaviour
     private bool death = false;
     
     void Start()
-    {
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+    {      
         startButton.sizeDelta = new Vector2(Screen.width / 4, Screen.height / 5);
         startButton.position = new Vector3(Screen.width / 2, Screen.height * 5 / 7);
         startButton.gameObject.GetComponentInChildren<Text>().fontSize = Screen.height/15;
-
-        restartButton.sizeDelta = new Vector2(Screen.width / 4, Screen.height / 5);
-        restartButton.position = new Vector3(Screen.width / 2, Screen.height *3/ 7);
-        restartButton.gameObject.GetComponentInChildren<Text>().fontSize = Screen.height / 15;
-
+        
         exitButton.sizeDelta = new Vector2(Screen.width / 4, Screen.height / 5);
         exitButton.position = new Vector3(Screen.width / 2, Screen.height /7);
         exitButton.gameObject.GetComponentInChildren<Text>().fontSize = Screen.height / 15;
@@ -34,6 +29,13 @@ public class MainMenuScript : MonoBehaviour
         soundButton.position = new Vector3( Screen.width/20*2, Screen.height - soundButton.rect.height*3/4, 0);
         //Debug.Log(Screen.width + " " + Screen.height);
         bgImage.localScale = new Vector2(Screen.width, Screen.width);
+
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+
+        restartButton.sizeDelta = new Vector2(Screen.width / 4, Screen.height / 5);
+        restartButton.position = new Vector3(Screen.width / 2, Screen.height * 3 / 7);
+        restartButton.gameObject.GetComponentInChildren<Text>().fontSize = Screen.height / 15;
+
     }
 
     // Update is called once per frame
@@ -74,8 +76,16 @@ public class MainMenuScript : MonoBehaviour
     public void SetColor()
     {
         Image img = soundButton.gameObject.GetComponent<Image>();
-        if (img.color == Color.white) img.color = Color.HSVToRGB(0, 0, 0);
-        else img.color = Color.white;
+        if (img.color == Color.white)
+        {
+            img.color = Color.HSVToRGB(0, 0, 0);
+            FindObjectOfType<VolumeScript>().SetVolume(0);
+        }
+        else
+        {
+            img.color = Color.white;
+            FindObjectOfType<VolumeScript>().SetVolume(100);
+        }
     }
 
     public void RestartLevel()

@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 272048238}
   - component: {fileID: 272048237}
   - component: {fileID: 272048236}
-  - component: {fileID: 272048240}
+  - component: {fileID: 272048241}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -223,7 +223,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &272048240
+--- !u!114 &272048241
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -232,13 +232,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 272048235}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b404ba5afa9e19a40a63cbfeced8e534, type: 3}
+  m_Script: {fileID: 11500000, guid: 14cf99605aa6b28469911fedd9da937c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   startButton: {fileID: 413368037}
   exitButton: {fileID: 1011692165}
   soundButton: {fileID: 1139735146}
-  bgImage: {fileID: 684869549}
+  bgImage: {fileID: 0}
+  restartButton: {fileID: 0}
+  menu: {fileID: 0}
 --- !u!1 &413368036
 GameObject:
   m_ObjectHideFlags: 0
@@ -321,7 +323,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 272048240}
+      - m_Target: {fileID: 272048241}
         m_MethodName: LoadScene
         m_Mode: 3
         m_Arguments:
@@ -354,7 +356,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 6662907644793149727, guid: f1afd9a284790db41a55f4485510a44a,
+  m_Sprite: {fileID: -525850466803813883, guid: f1afd9a284790db41a55f4485510a44a,
     type: 3}
   m_Type: 0
   m_PreserveAspect: 0
@@ -399,7 +401,7 @@ RectTransform:
   m_GameObject: {fileID: 684869548}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 3}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 5, y: 5, z: 1}
   m_Children: []
   m_Father: {fileID: 272048239}
   m_RootOrder: 0
@@ -429,7 +431,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: -6125662433916584031, guid: f1afd9a284790db41a55f4485510a44a,
+  m_Sprite: {fileID: -2385859332870674897, guid: f1afd9a284790db41a55f4485510a44a,
     type: 3}
   m_Type: 0
   m_PreserveAspect: 0
@@ -595,7 +597,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 272048240}
+      - m_Target: {fileID: 272048241}
         m_MethodName: QuitGame
         m_Mode: 1
         m_Arguments:
@@ -628,7 +630,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 6662907644793149727, guid: f1afd9a284790db41a55f4485510a44a,
+  m_Sprite: {fileID: -525850466803813883, guid: f1afd9a284790db41a55f4485510a44a,
     type: 3}
   m_Type: 0
   m_PreserveAspect: 0
@@ -727,7 +729,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 272048240}
+      - m_Target: {fileID: 272048241}
         m_MethodName: SetColor
         m_Mode: 1
         m_Arguments:

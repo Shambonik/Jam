@@ -10,7 +10,7 @@ public class LeverScript : MonoBehaviour
     private Quaternion newRotation;
     private float startTime;
     private float delayDuration = 24;
-    private GameObject lever; 
+    private GameObject lever;
     // Start is called before the first frame update
     void Start()
     {
@@ -49,6 +49,7 @@ public class LeverScript : MonoBehaviour
 
     private void startChanging()
     {
+        player.GetComponent<PlayerScript>().PlayLeverSound();
         activated = !activated;
         startTime = Time.time;
         newRotation = Quaternion.Euler(-120, lever.transform.localRotation.eulerAngles.y, lever.transform.localRotation.eulerAngles.z);
