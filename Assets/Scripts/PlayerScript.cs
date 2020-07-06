@@ -116,13 +116,13 @@ public class PlayerScript : MonoBehaviour
                     {
                         if (landing)
                         {
-                            jumpSound.volume = 0.6f * FindObjectOfType<VolumeScript>().GetVolume();
                             jumpSound.Play();
                             transform.position = new Vector3(newPosition.x, landingY, newPosition.z);
                             ySpeed = 0;
                             jumping = false;
                             landing = false;
                             startTime = Time.time;
+                            jumpSound.volume = 0.6f * FindObjectOfType<VolumeScript>().GetVolume();
                         }
                         else landingY -= blockSide;
                     }
@@ -130,7 +130,7 @@ public class PlayerScript : MonoBehaviour
                 else
                 {
                     ySpeed -= g;
-                    if (transform.position.y < -100f)
+                    if (transform.position.y < -10f)
                     {
                         //FindObjectOfType<MainMenuScript>().GetComponent<Canvas>().enabled = true;
                         dead = true;

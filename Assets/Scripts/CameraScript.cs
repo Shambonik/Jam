@@ -22,9 +22,9 @@ public class CameraScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GetComponent<AudioSource>().volume = FindObjectOfType<VolumeScript>().GetVolume();
         newPosition = player.transform.position - nullPoint;
         transform.position = Vector3.Lerp(transform.position, new Vector3(newPosition.x, player.GetComponent<PlayerScript>().getLandingY()-nullPoint.y, newPosition.z), 0.75f*Time.deltaTime);
+        GetComponent<AudioSource>().volume = FindObjectOfType<VolumeScript>().GetVolume();
     }
 
     public void setMaterial()
