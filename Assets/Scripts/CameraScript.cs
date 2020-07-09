@@ -27,6 +27,11 @@ public class CameraScript : MonoBehaviour
         GetComponent<AudioSource>().volume = FindObjectOfType<VolumeScript>().GetVolume();
     }
 
+    public void changeNullPoint(Vector3 nullP)
+    {
+        nullPoint = nullP - transform.position;
+    }
+
     public void setMaterial()
     {
         for (int i = 0; i < objectMaterial.Count; i++)

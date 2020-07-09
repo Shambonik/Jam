@@ -27,8 +27,6 @@ ScriptsOnlyBuild:
     - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.TestListCacheData
-    UnityEditor.UI.dll:
-    - UnityEditor.UI.ImageEditor
     UnityEngine.UI.dll:
     - UnityEngine.EventSystems.EventSystem
     - UnityEngine.EventSystems.StandaloneInputModule
@@ -80,37 +78,37 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 9374}
+      Script: {instanceID: 9372}
+    - Class: 114
+      Script: {instanceID: 9598}
     - Class: 114
       Script: {instanceID: 9600}
     - Class: 114
-      Script: {instanceID: 9602}
+      Script: {instanceID: 9606}
     - Class: 114
-      Script: {instanceID: 9608}
+      Script: {instanceID: 9612}
     - Class: 114
-      Script: {instanceID: 9614}
+      Script: {instanceID: 9620}
     - Class: 114
-      Script: {instanceID: 9622}
+      Script: {instanceID: 9656}
     - Class: 114
       Script: {instanceID: 9658}
     - Class: 114
-      Script: {instanceID: 9660}
+      Script: {instanceID: 10100}
     - Class: 114
-      Script: {instanceID: 10102}
+      Script: {instanceID: 10104}
     - Class: 114
-      Script: {instanceID: 10106}
+      Script: {instanceID: 10148}
     - Class: 114
-      Script: {instanceID: 10150}
+      Script: {instanceID: 10668}
     - Class: 114
-      Script: {instanceID: 10670}
+      Script: {instanceID: 10674}
     - Class: 114
-      Script: {instanceID: 10676}
+      Script: {instanceID: 10908}
     - Class: 114
-      Script: {instanceID: 10910}
+      Script: {instanceID: 11410}
     - Class: 114
-      Script: {instanceID: 11412}
-    - Class: 114
-      Script: {instanceID: 11436}
+      Script: {instanceID: 11434}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -173,39 +171,39 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 9306}
+      Script: {instanceID: 9304}
     - Class: 114
-      Script: {instanceID: 9374}
+      Script: {instanceID: 9372}
+    - Class: 114
+      Script: {instanceID: 9598}
     - Class: 114
       Script: {instanceID: 9600}
     - Class: 114
-      Script: {instanceID: 9602}
+      Script: {instanceID: 9606}
     - Class: 114
-      Script: {instanceID: 9608}
+      Script: {instanceID: 9612}
     - Class: 114
-      Script: {instanceID: 9614}
+      Script: {instanceID: 9620}
     - Class: 114
-      Script: {instanceID: 9622}
+      Script: {instanceID: 9656}
     - Class: 114
       Script: {instanceID: 9658}
     - Class: 114
-      Script: {instanceID: 9660}
+      Script: {instanceID: 10100}
     - Class: 114
-      Script: {instanceID: 10102}
+      Script: {instanceID: 10104}
     - Class: 114
-      Script: {instanceID: 10106}
+      Script: {instanceID: 10148}
     - Class: 114
-      Script: {instanceID: 10150}
+      Script: {instanceID: 10550}
     - Class: 114
-      Script: {instanceID: 10552}
+      Script: {instanceID: 10598}
     - Class: 114
-      Script: {instanceID: 10600}
+      Script: {instanceID: 10668}
     - Class: 114
-      Script: {instanceID: 10670}
+      Script: {instanceID: 10908}
     - Class: 114
-      Script: {instanceID: 10910}
-    - Class: 114
-      Script: {instanceID: 11412}
+      Script: {instanceID: 11410}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -270,41 +268,41 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 9306}
+      Script: {instanceID: 9304}
     - Class: 114
-      Script: {instanceID: 9374}
+      Script: {instanceID: 9372}
+    - Class: 114
+      Script: {instanceID: 9598}
     - Class: 114
       Script: {instanceID: 9600}
     - Class: 114
-      Script: {instanceID: 9602}
+      Script: {instanceID: 9606}
     - Class: 114
-      Script: {instanceID: 9608}
+      Script: {instanceID: 9612}
     - Class: 114
-      Script: {instanceID: 9614}
+      Script: {instanceID: 9620}
     - Class: 114
-      Script: {instanceID: 9622}
+      Script: {instanceID: 9656}
     - Class: 114
       Script: {instanceID: 9658}
     - Class: 114
-      Script: {instanceID: 9660}
+      Script: {instanceID: 10100}
     - Class: 114
-      Script: {instanceID: 10102}
+      Script: {instanceID: 10104}
     - Class: 114
-      Script: {instanceID: 10106}
+      Script: {instanceID: 10148}
     - Class: 114
-      Script: {instanceID: 10150}
+      Script: {instanceID: 10550}
     - Class: 114
-      Script: {instanceID: 10552}
+      Script: {instanceID: 10668}
     - Class: 114
-      Script: {instanceID: 10670}
+      Script: {instanceID: 10820}
     - Class: 114
-      Script: {instanceID: 10822}
+      Script: {instanceID: 10908}
     - Class: 114
-      Script: {instanceID: 10910}
+      Script: {instanceID: 11410}
     - Class: 114
-      Script: {instanceID: 11412}
-    - Class: 114
-      Script: {instanceID: 11422}
+      Script: {instanceID: 11420}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -1189,4 +1187,4 @@ ScriptsOnlyBuild:
   - Assets/Scenes/Level1.unity
   - Assets/Scenes/LevelWithTowers.unity
   - Assets/Scenes/LevelCastle.unity
-  playerPath: D:/Desktop/Cutie's Adventure.exe
+  playerPath: D:/Desktop/Cutie's Adventure 0_1_5/Cutie's Adventure.exe

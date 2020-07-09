@@ -18,6 +18,7 @@ public class PlayerScript : MonoBehaviour
     private float delayDuration = 8;
     private float shortDelayDuration = 4;
     private float boxDelayDuration = 12;
+    private float minSpeed = -0.4f;
     private float startTime;
     private RaycastBoxScript raycastBoxTopScript;
     private RaycastBoxScript raycastBoxBottomScript;
@@ -38,6 +39,8 @@ public class PlayerScript : MonoBehaviour
     private float ladderUp = 0;
     private bool onLadder = false;
     private bool dead = false;
+    private CameraScript mainCamera;
+    private bool cameraChange = false;
 
     void Start()
     {
@@ -55,6 +58,7 @@ public class PlayerScript : MonoBehaviour
         cameraScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraScript>();
         layerIgnore = LayerMask.GetMask("Ignore Raycast");
         jumpSpeed = standartJumpSpeed;
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraScript>();
     }
 
     public float getLandingY()
@@ -63,8 +67,13 @@ public class PlayerScript : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
+        if (cameraChange)
+        {
+            mainCamera.changeNullPoint(new Vector3(0, transform.position.y, 0));
+            cameraChange = false;
+        }
         transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(transform.eulerAngles.x, rot, transform.eulerAngles.z), 800 * Time.deltaTime);
         if (ladder)
         {
@@ -130,6 +139,8 @@ public class PlayerScript : MonoBehaviour
                 else
                 {
                     ySpeed -= g;
+                    if (ySpeed < minSpeed) ySpeed = minSpeed;
+                    //Debug.Lo
                     if (transform.position.y < -10f)
                     {
                         //FindObjectOfType<MainMenuScript>().GetComponent<Canvas>().enabled = true;
@@ -461,12 +472,14 @@ public class PlayerScript : MonoBehaviour
     {
         coordinates = coord;
         transform.position = new Vector3(coordinates.x * (-blockSide), transform.position.y, coordinates.y * (blockSide));
+        cameraChange = true;
     }
 
     public void setCoordinates(Vector2 coord, int height)
     {
         coordinates = coord;
         transform.position = new Vector3(coordinates.x * (-blockSide), transform.position.y + height*blockSide, coordinates.y * (blockSide));
+        cameraChange = true;
     }
 
     public bool getDead()
