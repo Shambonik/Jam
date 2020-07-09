@@ -140,10 +140,8 @@ public class PlayerScript : MonoBehaviour
                 {
                     ySpeed -= g;
                     if (ySpeed < minSpeed) ySpeed = minSpeed;
-                    //Debug.Lo
                     if (transform.position.y < -10f)
                     {
-                        //FindObjectOfType<MainMenuScript>().GetComponent<Canvas>().enabled = true;
                         dead = true;
                         panelDeath.SetActive(true);
                         textDeath.SetActive(true);

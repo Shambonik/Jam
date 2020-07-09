@@ -10,6 +10,7 @@ public class DestructibleScript : MonoBehaviour
     private float delayDuration = 30;
     public GameObject prefab;
     private bool isAttacked = false;
+    private bool sound = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,13 +26,19 @@ public class DestructibleScript : MonoBehaviour
         {
             GameObject destroyed = Instantiate(prefab, transform.position, transform.rotation) as GameObject;
             Destroy(this.gameObject);
+            if(sound)
+            {
+                player.GetComponent<PlayerScript>().boxShatterSound.volume = FindObjectOfType<VolumeScript>().GetVolume();
+                player.GetComponent<PlayerScript>().boxShatterSound.Play();
+                sound = false;
+            }
+                
         }
     }
 
     public void destroy()
     {
-        player.GetComponent<PlayerScript>().boxShatterSound.volume = FindObjectOfType<VolumeScript>().GetVolume();
-        player.GetComponent<PlayerScript>().boxShatterSound.Play();
+        sound = true;
         isAttacked = true;
         player.GetComponent<Animator>().Play("Attack");
         startTime = Time.time;

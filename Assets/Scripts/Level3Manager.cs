@@ -15,6 +15,7 @@ public class Level3Manager : MonoBehaviour
     public GameObject endPanel;
     private GameObject player;
     private int phase = 0;
+    private bool sound = true;
 
     void Start()
     {
@@ -34,10 +35,11 @@ public class Level3Manager : MonoBehaviour
         if (solved)
         {
             bridge.transform.localRotation = Quaternion.Lerp(bridge.transform.localRotation, Quaternion.AngleAxis(newRotation, Vector3.right), 1*Time.deltaTime);
-            if (!bridgeSound.isPlaying)
+            if (sound)
             {
                 bridgeSound.volume = FindObjectOfType<VolumeScript>().GetVolume();
                 bridgeSound.Play();
+                sound = false;
             }
         }
 

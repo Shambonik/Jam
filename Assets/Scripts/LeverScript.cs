@@ -12,6 +12,7 @@ public class LeverScript : MonoBehaviour
     private float delayDuration = 24;
     private GameObject lever;
     private Quaternion oldRotation;
+    private bool sound = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +29,11 @@ public class LeverScript : MonoBehaviour
         if (Time.time - startTime > delayDuration * Time.deltaTime)
         {
             lever.transform.localRotation = Quaternion.Lerp(lever.transform.localRotation, newRotation, 0.2f);
+            if (sound)
+            {
+                player.GetComponent<PlayerScript>().PlayLeverSound();
+                sound = false;
+            }
         }
     }
 
@@ -50,7 +56,7 @@ public class LeverScript : MonoBehaviour
 
     private void startChanging()
     {
-        player.GetComponent<PlayerScript>().PlayLeverSound();
+        sound = true;
         activated = !activated;
         startTime = Time.time;
         oldRotation = newRotation;
